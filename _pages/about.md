@@ -3,9 +3,14 @@ layout: page
 title: About Me
 permalink: /about/
 ---
+Aspiring SWE/data scientist with a strong background in sports management. 
 
-This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
+Current tech stack :
+- Python
+- SQL
+- Postgres
+- Docker
+- Kubernetes
+- RabbitMQ
 
-
-
-[^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats.
+linkedin: https://www.linkedin.com/in/eric-vincent-706078137/
