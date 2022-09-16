@@ -2467,7 +2467,7 @@ aiobotocore 2.3.4 requires botocore&lt;1.24.22,&gt;=1.24.21, but you have botoco
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">accuracy_3s</span> <span class="o">=</span>      <span class="n">is_3</span><span class="p">(</span><span class="n">valid_3_tens</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">accuracy_3s</span> <span class="o">=</span> <span class="n">is_3</span><span class="p">(</span><span class="n">valid_3_tens</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">accuracy_7s</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">is_3</span><span class="p">(</span><span class="n">valid_7_tens</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
 <span class="n">accuracy_3s</span><span class="p">,</span><span class="n">accuracy_7s</span><span class="p">,(</span><span class="n">accuracy_3s</span><span class="o">+</span><span class="n">accuracy_7s</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
@@ -3485,7 +3485,7 @@ aiobotocore 2.3.4 requires botocore&lt;1.24.22,&gt;=1.24.21, but you have botoco
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">weights</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
-<span class="n">bias</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">zero_</span><span class="p">();</span>
+<span class="n">bias</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -3733,7 +3733,7 @@ aiobotocore 2.3.4 requires botocore&lt;1.24.22,&gt;=1.24.21, but you have botoco
 <a class="anchor" href="#Creating-an-optimizer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating an optimizer<a class="anchor-link" href="#Creating-an-optimizer"> </a>
 </h1>
 <ol>
-<li>replace linear1 function with Pytorch's nn.lineat module
+<li>replace linear1 function with Pytorch's nn.linear module
 reminder : nn.linear accomplishes the same thing as init_params and linear together - it contains both the weights and biases in a single class</li>
 </ol>
 
