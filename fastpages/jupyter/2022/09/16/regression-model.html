@@ -4,21 +4,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Title | Data Science Blog</title>
+<title>Regression Model | Data Science Blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Title" />
+<meta property="og:title" content="Regression Model" />
+<meta name="author" content="Eric Vincent" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
-<meta property="og:description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
-<link rel="canonical" href="https://ericvincent18.github.io/fastaiMLmodel/2022/09/16/regression-model.html" />
-<meta property="og:url" content="https://ericvincent18.github.io/fastaiMLmodel/2022/09/16/regression-model.html" />
+<meta name="description" content="Using fast.ai and Pytorch’s modules, building a regression model and Neural Network using Kaggle’s titanic survival data set" />
+<meta property="og:description" content="Using fast.ai and Pytorch’s modules, building a regression model and Neural Network using Kaggle’s titanic survival data set" />
+<link rel="canonical" href="https://ericvincent18.github.io/fastaiMLmodel/fastpages/jupyter/2022/09/16/regression-model.html" />
+<meta property="og:url" content="https://ericvincent18.github.io/fastaiMLmodel/fastpages/jupyter/2022/09/16/regression-model.html" />
 <meta property="og:site_name" content="Data Science Blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2022-09-16T00:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Title" />
+<meta property="twitter:title" content="Regression Model" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-09-16T00:00:00-05:00","datePublished":"2022-09-16T00:00:00-05:00","description":"An easy to use blogging platform with support for Jupyter Notebooks.","headline":"Title","mainEntityOfPage":{"@type":"WebPage","@id":"https://ericvincent18.github.io/fastaiMLmodel/2022/09/16/regression-model.html"},"url":"https://ericvincent18.github.io/fastaiMLmodel/2022/09/16/regression-model.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Eric Vincent"},"dateModified":"2022-09-16T00:00:00-05:00","datePublished":"2022-09-16T00:00:00-05:00","description":"Using fast.ai and Pytorch’s modules, building a regression model and Neural Network using Kaggle’s titanic survival data set","headline":"Regression Model","mainEntityOfPage":{"@type":"WebPage","@id":"https://ericvincent18.github.io/fastaiMLmodel/fastpages/jupyter/2022/09/16/regression-model.html"},"url":"https://ericvincent18.github.io/fastaiMLmodel/fastpages/jupyter/2022/09/16/regression-model.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/fastaiMLmodel/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://ericvincent18.github.io/fastaiMLmodel/feed.xml" title="Data Science Blog" /><link rel="shortcut icon" type="image/x-icon" href="/fastaiMLmodel/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -73,9 +74,11 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Title</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-09-16T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Regression Model</h1><p class="page-description">Using fast.ai and Pytorch's modules, building a regression model and Neural Network using Kaggle's titanic survival data set</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-09-16T00:00:00-05:00" itemprop="datePublished">
         Sep 16, 2022
-      </time>
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Eric Vincent</span></span>
        • <span class="read-time" title="Estimated read time">
     
     
@@ -83,6 +86,16 @@ window.onload = wrap_img;
     
 </span></p>
 
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/fastaiMLmodel/categories/#fastpages">fastpages</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/fastaiMLmodel/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
     
 
     
@@ -116,7 +129,8 @@ window.onload = wrap_img;
       </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <!--
+    <ul id="toc" class="section-nav">
+</ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
@@ -125,29 +139,6 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">&gt;</span> <span class="s2">&quot;Using fast.ai and Pytorch&#39;s modules, building a regression model and Neural Network using Kaggle&#39;s titanic survival data set&quot;</span>
-
-<span class="o">-</span> <span class="n">toc</span><span class="p">:</span> <span class="n">true</span>
-<span class="o">-</span> <span class="n">branch</span><span class="p">:</span> <span class="n">master</span>
-<span class="o">-</span> <span class="n">comments</span> <span class="p">:</span> <span class="kc">False</span>
-<span class="o">-</span> <span class="n">author</span> <span class="p">:</span> <span class="n">Eric</span> <span class="n">Vincent</span>
-<span class="o">-</span> <span class="n">categories</span> <span class="p">:</span> <span class="p">[</span><span class="n">fastpages</span><span class="p">,</span> <span class="n">jupyter</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -173,7 +164,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/kaggle/input/titanic-survival-dataset/train.csv&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/kaggle/input/titanic-survival-dataset/train.csv'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -565,7 +556,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Cabin&#39;</span><span class="p">,</span> <span class="s1">&#39;Ticket&#39;</span><span class="p">,</span> <span class="s1">&#39;PassengerId&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Cabin'</span><span class="p">,</span> <span class="s1">'Ticket'</span><span class="p">,</span> <span class="s1">'PassengerId'</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -582,7 +573,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Male&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Sex'</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -599,7 +590,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Male&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Male&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;male&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'male'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'female'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
 </pre></div>
 
     </div>
@@ -616,16 +607,16 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Embarked_C&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Embarked_C&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Embarked_C&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Embarked_S&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Embarked_S&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Embarked_S&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Pclass3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Embarked'</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'S'</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Embarked'</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'S'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass3'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass3'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass3'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
 </pre></div>
 
     </div>
@@ -999,7 +990,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">maxAge</span><span class="p">,</span> <span class="n">maxFare</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Fare&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">maxAge</span><span class="p">,</span> <span class="n">maxFare</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Age'</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Fare'</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -1049,7 +1040,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age_N&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">maxAge</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Age_N'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Age'</span><span class="p">]</span> <span class="o">/</span> <span class="n">maxAge</span>
 </pre></div>
 
     </div>
@@ -1066,7 +1057,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;log_Fare&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Fare&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">maxFare</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Fare'</span><span class="p">]</span> <span class="o">/</span> <span class="n">maxFare</span>
 </pre></div>
 
     </div>
@@ -1364,7 +1355,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;log_Fare&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;log_Fare&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1381,7 +1372,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;log_Fare&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;log_Fare&#39;</span><span class="p">]</span> <span class="o">+</span><span class="mi">1</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">]</span> <span class="o">+</span><span class="mi">1</span>
 </pre></div>
 
     </div>
@@ -1398,7 +1389,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;log_fare&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'log_fare'</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -1415,7 +1406,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;log_Fare&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;log_Fare&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> 
 </pre></div>
 
     </div>
@@ -1734,7 +1725,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Ones&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Ones'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 
     </div>
@@ -2292,7 +2283,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;log_Fare&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -2325,7 +2316,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">num</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;log_Fare&#39;</span><span class="p">]])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">num</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">]])</span>
 </pre></div>
 
     </div>
@@ -2351,6 +2342,7 @@ window.onload = wrap_img;
 <details class="description">
       <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
         <p>
+</p>
 <div class="output_wrapper">
 <div class="output">
 
@@ -2544,7 +2536,7 @@ window.onload = wrap_img;
 
 </div>
 </div>
-</p>
+
     </details>
 </div>
     
@@ -2573,7 +2565,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">,</span> <span class="s1">&#39;Sex&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Fare&#39;</span><span class="p">,</span> <span class="s1">&#39;Embarked&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">,</span> <span class="s1">'Sex'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">,</span> <span class="s1">'Fare'</span><span class="p">,</span> <span class="s1">'Embarked'</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -2590,7 +2582,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -2607,7 +2599,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Age_N&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Age_N&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Age_N'</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">'Age_N'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2878,7 +2870,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Pclass3&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Pclass3'</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -3104,7 +3096,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Linear&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Linear'</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -3121,8 +3113,8 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Embarked_S&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Embarked_S&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;Q&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
-<span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Embarked_C&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Embarked_C&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;Q&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'Q'</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<span class="n">model_df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'Q'</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
 </pre></div>
 
     </div>
@@ -3862,7 +3854,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -4112,7 +4104,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Loss&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Linear&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Loss'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Linear'</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 </pre></div>
 
     </div>
@@ -4374,7 +4366,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Linear&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Linear'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -4407,7 +4399,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">survived_label</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">survived_label</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
 </pre></div>
 
     </div>
@@ -4468,7 +4460,7 @@ Name: Survived, Length: 891, dtype: bool</pre>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">death_label</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">death_label</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
 </pre></div>
 
     </div>
@@ -4540,7 +4532,7 @@ Name: Survived, Length: 891, dtype: bool</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">fastbook</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'Greys'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -5158,7 +5150,7 @@ Name: Survived, Length: 891, dtype: bool</pre>
 <span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>stacked_survived <span class="ansi-blue-fg">=</span> torch<span class="ansi-blue-fg">.</span>stack<span class="ansi-blue-fg">(</span>survived_tensor<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>float<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">      2</span> stacked_death <span class="ansi-blue-fg">=</span> torch<span class="ansi-blue-fg">.</span>stack<span class="ansi-blue-fg">(</span>death_tensor<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>float<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
 
-<span class="ansi-red-fg">TypeError</span>: stack(): argument &#39;tensors&#39; (position 1) must be tuple of Tensors, not Tensor</pre>
+<span class="ansi-red-fg">TypeError</span>: stack(): argument 'tensors' (position 1) must be tuple of Tensors, not Tensor</pre>
 </div>
 </div>
 
@@ -5505,7 +5497,7 @@ Name: Survived, Length: 891, dtype: bool</pre>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'test'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -5536,7 +5528,7 @@ Name: Survived, Length: 891, dtype: bool</pre>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">copydf</span> <span class="o">=</span> <span class="n">copydf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Age_N&#39;</span><span class="p">,</span> <span class="s1">&#39;log_Fare&#39;</span><span class="p">,</span> <span class="s1">&#39;Ones&#39;</span><span class="p">,</span> <span class="s1">&#39;Linear&#39;</span><span class="p">,</span> <span class="s1">&#39;Loss&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">copydf</span> <span class="o">=</span> <span class="n">copydf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Age_N'</span><span class="p">,</span> <span class="s1">'log_Fare'</span><span class="p">,</span> <span class="s1">'Ones'</span><span class="p">,</span> <span class="s1">'Linear'</span><span class="p">,</span> <span class="s1">'Loss'</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -5738,8 +5730,8 @@ Name: Survived, Length: 891, dtype: bool</pre>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">survived_label</span> <span class="o">=</span> <span class="n">copydf</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
-<span class="n">death_label</span> <span class="o">=</span> <span class="n">copydf</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">survived_label</span> <span class="o">=</span> <span class="n">copydf</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="n">death_label</span> <span class="o">=</span> <span class="n">copydf</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
 <span class="n">survived</span> <span class="o">=</span> <span class="n">copydf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">survived_label</span><span class="p">]</span>
 <span class="n">death</span> <span class="o">=</span> <span class="n">copydf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">death_label</span><span class="p">]</span>
 <span class="n">num</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">survived</span><span class="p">))</span>
@@ -6019,7 +6011,7 @@ Name: Survived, Length: 891, dtype: bool</pre>
 
 
 
-  </div><a class="u-url" href="/fastaiMLmodel/2022/09/16/regression-model.html" hidden></a>
+  </div><a class="u-url" href="/fastaiMLmodel/fastpages/jupyter/2022/09/16/regression-model.html" hidden></a>
 </article>
 
       </div>
