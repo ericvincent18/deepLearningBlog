@@ -1,0 +1,4281 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Regression Model | Data Science Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Regression Model" />
+<meta name="author" content="Eric Vincent" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Using fast.ai and Pytorch’s modules, building a regression model and Neural Network using Kaggle’s titanic survival data set" />
+<meta property="og:description" content="Using fast.ai and Pytorch’s modules, building a regression model and Neural Network using Kaggle’s titanic survival data set" />
+<link rel="canonical" href="https://ericvincent18.github.io/fastaiMLmodel/fastpages/jupyter/2022/09/16/regression-model-NN-model.html" />
+<meta property="og:url" content="https://ericvincent18.github.io/fastaiMLmodel/fastpages/jupyter/2022/09/16/regression-model-NN-model.html" />
+<meta property="og:site_name" content="Data Science Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-09-16T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Regression Model" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Eric Vincent"},"dateModified":"2022-09-16T00:00:00-05:00","datePublished":"2022-09-16T00:00:00-05:00","description":"Using fast.ai and Pytorch’s modules, building a regression model and Neural Network using Kaggle’s titanic survival data set","headline":"Regression Model","mainEntityOfPage":{"@type":"WebPage","@id":"https://ericvincent18.github.io/fastaiMLmodel/fastpages/jupyter/2022/09/16/regression-model-NN-model.html"},"url":"https://ericvincent18.github.io/fastaiMLmodel/fastpages/jupyter/2022/09/16/regression-model-NN-model.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/fastaiMLmodel/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://ericvincent18.github.io/fastaiMLmodel/feed.xml" title="Data Science Blog" /><link rel="shortcut icon" type="image/x-icon" href="/fastaiMLmodel/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/fastaiMLmodel/">Data Science Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/fastaiMLmodel/about/">About Me</a><a class="page-link" href="/fastaiMLmodel/search/">Search</a><a class="page-link" href="/fastaiMLmodel/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Regression Model</h1><p class="page-description">Using fast.ai and Pytorch's modules, building a regression model and Neural Network using Kaggle's titanic survival data set</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-09-16T00:00:00-05:00" itemprop="datePublished">
+        Sep 16, 2022
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Eric Vincent</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      20 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/fastaiMLmodel/categories/#fastpages">fastpages</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/fastaiMLmodel/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/ericvincent18/fastaiMLmodel/tree/master/_notebooks/2022-09-16-regression-model-NN-model.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/fastaiMLmodel/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/ericvincent18/fastaiMLmodel/master?filepath=_notebooks%2F2022-09-16-regression-model-NN-model.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/fastaiMLmodel/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/ericvincent18/fastaiMLmodel/blob/master/_notebooks/2022-09-16-regression-model-NN-model.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/fastaiMLmodel/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fericvincent18%2FfastaiMLmodel%2Fblob%2Fmaster%2F_notebooks%2F2022-09-16-regression-model-NN-model.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/fastaiMLmodel/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Use-Stochastic-Gradient-Descent-to-optimize-our-prediction-model">Use Stochastic Gradient Descent to optimize our prediction model </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-09-16-regression-model-NN-model.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/kaggle/input/titanic-survival-dataset/train.csv'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Cabin'</span><span class="p">,</span> <span class="s1">'Ticket'</span><span class="p">,</span> <span class="s1">'PassengerId'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Sex'</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'male'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'female'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Embarked'</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'S'</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Embarked'</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'S'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass3'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'Pclass3'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Pclass3'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">random_parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">Sibsp</span><span class="p">,</span> <span class="n">Parch</span><span class="p">,</span> <span class="n">Age</span><span class="p">,</span> <span class="n">log_fare</span><span class="p">,</span> <span class="n">Pclass1</span><span class="p">,</span> <span class="n">Pclass2</span><span class="p">,</span> <span class="n">EmbarkS</span><span class="p">,</span> <span class="n">EmbarkC</span><span class="p">,</span> <span class="n">Male</span><span class="p">,</span> <span class="n">Const</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">random_parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">maxAge</span><span class="p">,</span> <span class="n">maxFare</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Age'</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Fare'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Age_N'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Age'</span><span class="p">]</span> <span class="o">/</span> <span class="n">maxAge</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Fare'</span><span class="p">]</span> <span class="o">/</span> <span class="n">maxFare</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'log_Fare'</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">Sibsp</span><span class="p">,</span> <span class="n">Parch</span><span class="p">,</span> <span class="n">Age</span><span class="p">,</span> <span class="n">log_fare</span><span class="p">,</span> <span class="n">Pclass1</span><span class="p">,</span> <span class="n">Pclass2</span><span class="p">,</span> <span class="n">EmbarkS</span><span class="p">,</span> <span class="n">EmbarkC</span><span class="p">,</span> <span class="n">Male</span><span class="p">,</span> <span class="n">Const</span>
+    
+    
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Ones'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.023121551427445874</span><span class="p">,</span>
+ <span class="mf">0.13402581877095354</span><span class="p">,</span>
+ <span class="mf">0.1460823666152794</span><span class="p">,</span>
+ <span class="mf">0.22088891772092012</span><span class="p">,</span>
+ <span class="mf">0.594795670221624</span><span class="p">,</span>
+ <span class="mf">0.7961562768917094</span><span class="p">,</span>
+ <span class="mf">0.8530100056367039</span><span class="p">,</span>
+ <span class="mf">0.8613248152275507</span><span class="p">,</span>
+ <span class="mf">0.8901214376590094</span><span class="p">,</span>
+ <span class="mf">0.9785782868782011</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span> <span class="o">=</span> <span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">,</span> <span class="s1">'Sex'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">,</span> <span class="s1">'Fare'</span><span class="p">,</span> <span class="s1">'Embarked'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Age_N'</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">'Age_N'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Pclass3'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'Q'</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<span class="n">model_df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'Q'</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<span class="n">model_df</span><span class="p">[</span><span class="s1">'Linear'</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Loss'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Linear'</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_df</span><span class="p">[</span><span class="s1">'Linear'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>2.255390616421957</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">survived_label</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="n">death_label</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">survived</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">survived_label</span><span class="p">]</span>
+<span class="n">death</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">death_label</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">fastbook</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Requirement already satisfied: fastbook in /opt/conda/lib/python3.7/site-packages (0.0.28)
+Requirement already satisfied: pip in /opt/conda/lib/python3.7/site-packages (from fastbook) (22.1.2)
+Requirement already satisfied: graphviz in /opt/conda/lib/python3.7/site-packages (from fastbook) (0.8.4)
+Requirement already satisfied: requests in /opt/conda/lib/python3.7/site-packages (from fastbook) (2.28.1)
+Requirement already satisfied: sentencepiece in /opt/conda/lib/python3.7/site-packages (from fastbook) (0.1.97)
+Requirement already satisfied: pandas in /opt/conda/lib/python3.7/site-packages (from fastbook) (1.3.5)
+Requirement already satisfied: packaging in /opt/conda/lib/python3.7/site-packages (from fastbook) (21.3)
+Requirement already satisfied: datasets in /opt/conda/lib/python3.7/site-packages (from fastbook) (2.1.0)
+Requirement already satisfied: fastai&gt;=2.6 in /opt/conda/lib/python3.7/site-packages (from fastbook) (2.7.9)
+Requirement already satisfied: transformers in /opt/conda/lib/python3.7/site-packages (from fastbook) (4.20.1)
+Requirement already satisfied: matplotlib in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (3.5.3)
+Requirement already satisfied: scikit-learn in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (1.0.2)
+Requirement already satisfied: pillow&gt;6.0.0 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (9.1.1)
+Requirement already satisfied: torchvision&gt;=0.8.2 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (0.12.0)
+Requirement already satisfied: pyyaml in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (6.0)
+Requirement already satisfied: fastdownload&lt;2,&gt;=0.0.5 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (0.0.7)
+Requirement already satisfied: fastcore&lt;1.6,&gt;=1.4.5 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (1.5.26)
+Requirement already satisfied: spacy&lt;4 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (3.3.1)
+Requirement already satisfied: fastprogress&gt;=0.2.4 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (1.0.3)
+Requirement already satisfied: scipy in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (1.7.3)
+Requirement already satisfied: torch&lt;1.14,&gt;=1.7 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (1.11.0)
+Requirement already satisfied: fsspec[http]&gt;=2021.05.0 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (2022.8.2)
+Requirement already satisfied: multiprocess in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (0.70.13)
+Requirement already satisfied: responses&lt;0.19 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (0.18.0)
+Requirement already satisfied: tqdm&gt;=4.62.1 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (4.64.0)
+Requirement already satisfied: numpy&gt;=1.17 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (1.21.6)
+Requirement already satisfied: dill in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (0.3.5.1)
+Requirement already satisfied: aiohttp in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (3.8.1)
+Requirement already satisfied: importlib-metadata in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (4.12.0)
+Requirement already satisfied: pyarrow&gt;=5.0.0 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (5.0.0)
+Requirement already satisfied: huggingface-hub&lt;1.0.0,&gt;=0.1.0 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (0.8.1)
+Requirement already satisfied: xxhash in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (3.0.0)
+Requirement already satisfied: charset-normalizer&lt;3,&gt;=2 in /opt/conda/lib/python3.7/site-packages (from requests-&gt;fastbook) (2.1.0)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /opt/conda/lib/python3.7/site-packages (from requests-&gt;fastbook) (1.26.12)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/conda/lib/python3.7/site-packages (from requests-&gt;fastbook) (2022.6.15.2)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /opt/conda/lib/python3.7/site-packages (from requests-&gt;fastbook) (3.3)
+Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /opt/conda/lib/python3.7/site-packages (from packaging-&gt;fastbook) (3.0.9)
+Requirement already satisfied: python-dateutil&gt;=2.7.3 in /opt/conda/lib/python3.7/site-packages (from pandas-&gt;fastbook) (2.8.2)
+Requirement already satisfied: pytz&gt;=2017.3 in /opt/conda/lib/python3.7/site-packages (from pandas-&gt;fastbook) (2022.1)
+Requirement already satisfied: regex!=2019.12.17 in /opt/conda/lib/python3.7/site-packages (from transformers-&gt;fastbook) (2021.11.10)
+Requirement already satisfied: tokenizers!=0.11.3,&lt;0.13,&gt;=0.11.1 in /opt/conda/lib/python3.7/site-packages (from transformers-&gt;fastbook) (0.12.1)
+Requirement already satisfied: filelock in /opt/conda/lib/python3.7/site-packages (from transformers-&gt;fastbook) (3.7.1)
+Requirement already satisfied: attrs&gt;=17.3.0 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (21.4.0)
+Requirement already satisfied: aiosignal&gt;=1.1.2 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (1.2.0)
+Requirement already satisfied: asynctest==0.13.0 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (0.13.0)
+Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (1.7.2)
+Requirement already satisfied: frozenlist&gt;=1.1.1 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (1.3.0)
+Requirement already satisfied: async-timeout&lt;5.0,&gt;=4.0.0a3 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (4.0.2)
+Requirement already satisfied: multidict&lt;7.0,&gt;=4.5 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (6.0.2)
+Requirement already satisfied: typing-extensions&gt;=3.7.4 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (4.1.1)
+Requirement already satisfied: six&gt;=1.5 in /opt/conda/lib/python3.7/site-packages (from python-dateutil&gt;=2.7.3-&gt;pandas-&gt;fastbook) (1.15.0)
+Requirement already satisfied: blis&lt;0.8.0,&gt;=0.4.0 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (0.7.8)
+Requirement already satisfied: srsly&lt;3.0.0,&gt;=2.4.3 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (2.4.4)
+Requirement already satisfied: jinja2 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (3.1.2)
+Requirement already satisfied: wasabi&lt;1.1.0,&gt;=0.9.1 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (0.10.1)
+Requirement already satisfied: langcodes&lt;4.0.0,&gt;=3.2.0 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (3.3.0)
+Requirement already satisfied: setuptools in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (59.8.0)
+Requirement already satisfied: murmurhash&lt;1.1.0,&gt;=0.28.0 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (1.0.8)
+Requirement already satisfied: pydantic!=1.8,!=1.8.1,&lt;1.9.0,&gt;=1.7.4 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (1.8.2)
+Requirement already satisfied: spacy-loggers&lt;2.0.0,&gt;=1.0.0 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (1.0.3)
+Requirement already satisfied: preshed&lt;3.1.0,&gt;=3.0.2 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (3.0.7)
+Requirement already satisfied: catalogue&lt;2.1.0,&gt;=2.0.6 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (2.0.8)
+Requirement already satisfied: spacy-legacy&lt;3.1.0,&gt;=3.0.9 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (3.0.10)
+Requirement already satisfied: cymem&lt;2.1.0,&gt;=2.0.2 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (2.0.6)
+Requirement already satisfied: typer&lt;0.5.0,&gt;=0.3.0 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (0.4.2)
+Requirement already satisfied: thinc&lt;8.1.0,&gt;=8.0.14 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (8.0.17)
+Requirement already satisfied: pathy&gt;=0.3.5 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (0.6.2)
+Requirement already satisfied: zipp&gt;=0.5 in /opt/conda/lib/python3.7/site-packages (from importlib-metadata-&gt;datasets-&gt;fastbook) (3.8.0)
+Requirement already satisfied: cycler&gt;=0.10 in /opt/conda/lib/python3.7/site-packages (from matplotlib-&gt;fastai&gt;=2.6-&gt;fastbook) (0.11.0)
+Requirement already satisfied: fonttools&gt;=4.22.0 in /opt/conda/lib/python3.7/site-packages (from matplotlib-&gt;fastai&gt;=2.6-&gt;fastbook) (4.33.3)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /opt/conda/lib/python3.7/site-packages (from matplotlib-&gt;fastai&gt;=2.6-&gt;fastbook) (1.4.3)
+Requirement already satisfied: joblib&gt;=0.11 in /opt/conda/lib/python3.7/site-packages (from scikit-learn-&gt;fastai&gt;=2.6-&gt;fastbook) (1.0.1)
+Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /opt/conda/lib/python3.7/site-packages (from scikit-learn-&gt;fastai&gt;=2.6-&gt;fastbook) (3.1.0)
+Requirement already satisfied: smart-open&lt;6.0.0,&gt;=5.2.1 in /opt/conda/lib/python3.7/site-packages (from pathy&gt;=0.3.5-&gt;spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (5.2.1)
+Requirement already satisfied: click&lt;9.0.0,&gt;=7.1.1 in /opt/conda/lib/python3.7/site-packages (from typer&lt;0.5.0,&gt;=0.3.0-&gt;spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (8.0.4)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in /opt/conda/lib/python3.7/site-packages (from jinja2-&gt;spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (2.1.1)
+<span class="ansi-yellow-fg">WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv</span><span class="ansi-yellow-fg">
+</span>Note: you may need to restart the kernel to use updated packages.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">fastbook</span>
+<span class="n">fastbook</span><span class="o">.</span><span class="n">setup_book</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">fastbook</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'Greys'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">death</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Male</th>
+      <th>Embarked_C</th>
+      <th>Embarked_S</th>
+      <th>Pclass1</th>
+      <th>Pclass2</th>
+      <th>Age_N</th>
+      <th>log_Fare</th>
+      <th>Ones</th>
+      <th>Linear</th>
+      <th>Survived</th>
+      <th>Loss</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.2750</td>
+      <td>0.006103</td>
+      <td>1</td>
+      <td>1.984874</td>
+      <td>0</td>
+      <td>0.969977</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.4375</td>
+      <td>0.006771</td>
+      <td>1</td>
+      <td>2.102313</td>
+      <td>0</td>
+      <td>1.215093</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0000</td>
+      <td>0.007111</td>
+      <td>1</td>
+      <td>1.130991</td>
+      <td>0</td>
+      <td>0.017159</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.6750</td>
+      <td>0.041878</td>
+      <td>1</td>
+      <td>3.134283</td>
+      <td>0</td>
+      <td>4.555164</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0250</td>
+      <td>0.017507</td>
+      <td>1</td>
+      <td>1.959964</td>
+      <td>0</td>
+      <td>0.921530</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>884</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.3125</td>
+      <td>0.005935</td>
+      <td>1</td>
+      <td>1.993904</td>
+      <td>0</td>
+      <td>0.987844</td>
+    </tr>
+    <tr>
+      <th>885</th>
+      <td>0</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.4875</td>
+      <td>0.024013</td>
+      <td>1</td>
+      <td>2.089977</td>
+      <td>0</td>
+      <td>1.188051</td>
+    </tr>
+    <tr>
+      <th>886</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.3375</td>
+      <td>0.010882</td>
+      <td>1</td>
+      <td>2.872850</td>
+      <td>0</td>
+      <td>3.507568</td>
+    </tr>
+    <tr>
+      <th>888</th>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0000</td>
+      <td>0.019437</td>
+      <td>1</td>
+      <td>1.881848</td>
+      <td>0</td>
+      <td>0.777656</td>
+    </tr>
+    <tr>
+      <th>890</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.4000</td>
+      <td>0.006520</td>
+      <td>1</td>
+      <td>1.474995</td>
+      <td>0</td>
+      <td>0.225620</td>
+    </tr>
+  </tbody>
+</table>
+<p>549 rows × 13 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">survived</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Male</th>
+      <th>Embarked_C</th>
+      <th>Embarked_S</th>
+      <th>Pclass1</th>
+      <th>Pclass2</th>
+      <th>Age_N</th>
+      <th>log_Fare</th>
+      <th>Ones</th>
+      <th>Linear</th>
+      <th>Survived</th>
+      <th>Loss</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.4750</td>
+      <td>0.056575</td>
+      <td>1</td>
+      <td>2.478233</td>
+      <td>1</td>
+      <td>2.185174</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.3250</td>
+      <td>0.006666</td>
+      <td>1</td>
+      <td>1.859239</td>
+      <td>1</td>
+      <td>0.738291</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.4375</td>
+      <td>0.042829</td>
+      <td>1</td>
+      <td>2.807605</td>
+      <td>1</td>
+      <td>3.267434</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.3375</td>
+      <td>0.009336</td>
+      <td>1</td>
+      <td>2.140433</td>
+      <td>1</td>
+      <td>1.300588</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.1750</td>
+      <td>0.024771</td>
+      <td>1</td>
+      <td>2.248379</td>
+      <td>1</td>
+      <td>1.558451</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>875</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.1875</td>
+      <td>0.006082</td>
+      <td>1</td>
+      <td>1.366379</td>
+      <td>1</td>
+      <td>0.134234</td>
+    </tr>
+    <tr>
+      <th>879</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.7000</td>
+      <td>0.065324</td>
+      <td>1</td>
+      <td>2.790723</td>
+      <td>1</td>
+      <td>3.206687</td>
+    </tr>
+    <tr>
+      <th>880</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.3125</td>
+      <td>0.021499</td>
+      <td>1</td>
+      <td>2.848710</td>
+      <td>1</td>
+      <td>3.417730</td>
+    </tr>
+    <tr>
+      <th>887</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.2375</td>
+      <td>0.024714</td>
+      <td>1</td>
+      <td>2.596093</td>
+      <td>1</td>
+      <td>2.547514</td>
+    </tr>
+    <tr>
+      <th>889</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.3250</td>
+      <td>0.024714</td>
+      <td>1</td>
+      <td>2.443635</td>
+      <td>1</td>
+      <td>2.084081</td>
+    </tr>
+  </tbody>
+</table>
+<p>342 rows × 13 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">survived</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">surv</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">surv</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[1.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 0.4750, 0.0566, 1.0000, 2.4782, 1.0000, 2.1852]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="n">survived</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">b</span>
+<span class="c1"># TODO list comprehension for the stacked tensor containing all the rows, the result should be #rows, yaxis, xaxis</span>
+<span class="c1"># do it on the copy df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[1.0000, 0.0000, 0.0000, 1.0000, 0.0000, 1.0000, 0.0000, 0.4750, 0.0566, 1.0000, 2.4782, 1.0000, 2.1852]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">survived</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Male</th>
+      <th>Embarked_C</th>
+      <th>Embarked_S</th>
+      <th>Pclass1</th>
+      <th>Pclass2</th>
+      <th>Age_N</th>
+      <th>log_Fare</th>
+      <th>Ones</th>
+      <th>Linear</th>
+      <th>Survived</th>
+      <th>Loss</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.4750</td>
+      <td>0.056575</td>
+      <td>1</td>
+      <td>2.478233</td>
+      <td>1</td>
+      <td>2.185174</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.3250</td>
+      <td>0.006666</td>
+      <td>1</td>
+      <td>1.859239</td>
+      <td>1</td>
+      <td>0.738291</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.4375</td>
+      <td>0.042829</td>
+      <td>1</td>
+      <td>2.807605</td>
+      <td>1</td>
+      <td>3.267434</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.3375</td>
+      <td>0.009336</td>
+      <td>1</td>
+      <td>2.140433</td>
+      <td>1</td>
+      <td>1.300588</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.1750</td>
+      <td>0.024771</td>
+      <td>1</td>
+      <td>2.248379</td>
+      <td>1</td>
+      <td>1.558451</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>875</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.1875</td>
+      <td>0.006082</td>
+      <td>1</td>
+      <td>1.366379</td>
+      <td>1</td>
+      <td>0.134234</td>
+    </tr>
+    <tr>
+      <th>879</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.7000</td>
+      <td>0.065324</td>
+      <td>1</td>
+      <td>2.790723</td>
+      <td>1</td>
+      <td>3.206687</td>
+    </tr>
+    <tr>
+      <th>880</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.3125</td>
+      <td>0.021499</td>
+      <td>1</td>
+      <td>2.848710</td>
+      <td>1</td>
+      <td>3.417730</td>
+    </tr>
+    <tr>
+      <th>887</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.2375</td>
+      <td>0.024714</td>
+      <td>1</td>
+      <td>2.596093</td>
+      <td>1</td>
+      <td>2.547514</td>
+    </tr>
+    <tr>
+      <th>889</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0.3250</td>
+      <td>0.024714</td>
+      <td>1</td>
+      <td>2.443635</td>
+      <td>1</td>
+      <td>2.084081</td>
+    </tr>
+  </tbody>
+</table>
+<p>342 rows × 13 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">survived_tensor</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[1.0000, 0.0000, 0.0000,  ..., 2.4782, 1.0000, 2.1852],
+        [0.0000, 0.0000, 0.0000,  ..., 1.8592, 1.0000, 0.7383],
+        [1.0000, 0.0000, 0.0000,  ..., 2.8076, 1.0000, 3.2674],
+        ...,
+        [0.0000, 1.0000, 0.0000,  ..., 2.8487, 1.0000, 3.4177],
+        [0.0000, 0.0000, 0.0000,  ..., 2.5961, 1.0000, 2.5475],
+        [0.0000, 0.0000, 1.0000,  ..., 2.4436, 1.0000, 2.0841]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">survived_tensor</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">death_tensor</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(342, 549)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">num</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">survived</span><span class="p">))</span>
+<span class="n">stacked_survived</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">survived</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">num</span><span class="p">])</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">num</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">copydf</span> <span class="o">=</span> <span class="n">model_df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">copydf</span> <span class="o">=</span> <span class="n">copydf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Age_N'</span><span class="p">,</span> <span class="s1">'log_Fare'</span><span class="p">,</span> <span class="s1">'Ones'</span><span class="p">,</span> <span class="s1">'Linear'</span><span class="p">,</span> <span class="s1">'Loss'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">copydf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">copydf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(0.1889763779527559, 0.7244094488188977)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">death</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">num</span><span class="p">])</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">death</span><span class="p">))]</span>
+<span class="n">rStacked</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">rStacked</span><span class="o">.</span><span class="n">shape</span>
+<span class="c1"># this makes sense, 549 rows, single vector with (1x13rows) vs they had a rank 3 tensor</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([549, 13])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">copydf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">copydf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">copydf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">copydf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">copydf</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Male</th>
+      <th>Embarked_C</th>
+      <th>Embarked_S</th>
+      <th>Pclass1</th>
+      <th>Pclass2</th>
+      <th>Survived</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>886</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>887</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>888</th>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>889</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>890</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>891 rows × 8 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">survived_label</span> <span class="o">=</span> <span class="n">copydf</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="n">death_label</span> <span class="o">=</span> <span class="n">copydf</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="n">survived</span> <span class="o">=</span> <span class="n">copydf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">survived_label</span><span class="p">]</span>
+<span class="c1"># survived['Embarked_S'] = survived['Embarked_S'].fillna(0)</span>
+<span class="c1"># survived['Embarked_C'] = survived['Embarked_C'].fillna(0)</span>
+<span class="n">death</span> <span class="o">=</span> <span class="n">copydf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">death_label</span><span class="p">]</span>
+<span class="c1"># num = range(len(survived))</span>
+<span class="c1"># nums = range(len(death))</span>
+<span class="n">stacked_survived</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">survived</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">num</span><span class="p">])</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">survived</span><span class="p">))]</span>
+<span class="n">stacked_death</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">death</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">num</span><span class="p">])</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">death</span><span class="p">))]</span>
+<span class="c1"># stacked_survived.shape, stacked_death.shape</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">stacked_death</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">stacked_survived</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(549, 342)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Divide by the number of deaths of survivors in each label?</span>
+<span class="n">survive_tensors_stacked</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">stacked_survived</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">death_tensors_stacked</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">stacked_death</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+
+
+<span class="c1"># mean_survived = stacked_death.mean(0)</span>
+<span class="c1"># mean_death = stacked_survived.mean(0)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">survive_tensors_stacked</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">death_tensors_stacked</span><span class="o">.</span><span class="n">shape</span> <span class="c1"># i.e. 2 x rank 2 tensors with each 342 &amp; 549 labels respectively, consisting of 8 rows each</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(torch.Size([342, 8]), torch.Size([549, 8]))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mean_survived</span> <span class="o">=</span> <span class="n">survive_tensors_stacked</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mean_death</span> <span class="o">=</span> <span class="n">death_tensors_stacked</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mean_survived</span><span class="p">,</span><span class="n">mean_death</span>
+<span class="c1"># embarked rows are Nan - due to fillna?  -- no more</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor([0.4737, 0.4649, 0.3187, 0.2719, 0.6345, 0.3977, 0.2544, 1.0000]),
+ tensor([0.5537, 0.3297, 0.8525, 0.1366, 0.7778, 0.1457, 0.1767, 0.0000]))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">single_survivor</span> <span class="o">=</span> <span class="n">survive_tensors_stacked</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">single_death</span> <span class="o">=</span> <span class="n">death_tensors_stacked</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">single_death</span><span class="p">,</span> <span class="n">single_survivor</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor([0., 0., 1., 0., 1., 0., 0., 0.]),
+ tensor([0., 0., 0., 0., 1., 0., 0., 1.]))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">F</span><span class="o">.</span><span class="n">l1_loss</span><span class="p">(</span><span class="n">single_survivor</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span><span class="n">mean_death</span><span class="p">),</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">single_survivor</span><span class="p">,</span><span class="n">mean_death</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor(0.4271), tensor(0.5318))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">F</span><span class="o">.</span><span class="n">l1_loss</span><span class="p">(</span><span class="n">single_survivor</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span><span class="n">mean_survived</span><span class="p">),</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">single_survivor</span><span class="p">,</span><span class="n">mean_survived</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+<span class="c1"># need RElu given that data contains many 0? -- &gt; nan output </span>
+
+<span class="c1"># Update - both values are smaller than the distance between the survivor and the mean of the death</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor(0.3183), tensor(0.3487))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">survive_distance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span> 
+    <span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="c1"># distance_all_survived = survive_distance(survive_tensors_stacked, mean_survived)</span>
+<span class="c1"># distance_all_survived</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">stacked_survived</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">mean_survived</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(list, torch.Tensor)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">valid_survivor_dist</span> <span class="o">=</span> <span class="n">survive_distance</span><span class="p">(</span><span class="n">survive_tensors_stacked</span><span class="p">,</span> <span class="n">mean_survived</span><span class="p">)</span>
+<span class="n">valid_survivor_dist</span><span class="p">,</span> <span class="n">valid_survivor_dist</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor(0.4210), torch.Size([]))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">is_alive</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">survive_distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mean_survived</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">survive_distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mean_death</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Update - changed the -1,-2 to simple mean() to fix the index out of range</span>
+<span class="n">is_alive</span><span class="p">(</span><span class="n">single_survivor</span><span class="p">),</span> <span class="n">is_alive</span><span class="p">(</span><span class="n">single_survivor</span><span class="p">)</span><span class="o">.</span><span class="n">float</span>
+<span class="c1"># function works, is a valid survivor</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor(True), &lt;function Tensor.float&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">is_alive</span><span class="p">(</span><span class="n">survive_tensors_stacked</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor(True)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">accuracy_alive</span> <span class="o">=</span> <span class="n">is_alive</span><span class="p">(</span><span class="n">survive_tensors_stacked</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">accuracy_death</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">is_alive</span><span class="p">(</span><span class="n">death_tensors_stacked</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">accuracy_alive</span><span class="p">,</span><span class="n">accuracy_death</span><span class="p">,(</span><span class="n">accuracy_alive</span><span class="o">+</span><span class="n">accuracy_death</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor(1.), tensor(1.), tensor(1.))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Use-Stochastic-Gradient-Descent-to-optimize-our-prediction-model">
+<a class="anchor" href="#Use-Stochastic-Gradient-Descent-to-optimize-our-prediction-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use Stochastic Gradient Descent to optimize our prediction model<a class="anchor-link" href="#Use-Stochastic-Gradient-Descent-to-optimize-our-prediction-model"> </a>
+</h1>
+<ol>
+<li>Initialize the weights.</li>
+<li>For each image, use these weights to predict whether it appears to be a 3 or a 7.</li>
+<li>Based on these predictions, calculate how good the model is (its loss).</li>
+<li>Calculate the gradient, which measures for each weight, how changing that weight would change the loss</li>
+<li>Step (that is, change) all the weights based on that calculation.</li>
+<li>Go back to the step 2, and repeat the process.</li>
+<li>Iterate until we stop the training process </li>
+</ol>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># Get a tensor which will requre gradients</span>
+<span class="n">xt</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">3.</span><span class="p">)</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">()</span>
+<span class="n">yt</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span>
+<span class="n">yt</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<span class="n">xt</span><span class="o">.</span><span class="n">grad</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor(6.)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">xt</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">3.</span><span class="p">,</span><span class="mf">4.</span><span class="p">,</span><span class="mf">10.</span><span class="p">])</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">()</span>
+<span class="n">xt</span>
+
+<span class="c1"># Add sum to the quadratic function so it can take a vector (rank-1 tensor) and return a scalar (rank-0 tensor)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">yt</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span>
+<span class="n">yt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor(125., grad_fn=&lt;SumBackward0&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">yt</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<span class="n">xt</span><span class="o">.</span><span class="n">grad</span>
+<span class="c1"># Implement stepping with a learning rate</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-5</span>
+<span class="c1"># w -= gradient(w) * lr</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">mse</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">):</span> <span class="k">return</span> <span class="p">((</span><span class="n">preds</span><span class="o">-</span><span class="n">targets</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="n">params</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">*</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">init_params</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span> <span class="k">return</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">size</span><span class="p">)</span><span class="o">*</span><span class="n">std</span><span class="p">)</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">()</span>
+
+
+<span class="n">weights</span> <span class="o">=</span> <span class="n">init_params</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">bias</span> <span class="o">=</span> <span class="n">init_params</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">survive_tensors_stacked</span><span class="p">,</span> <span class="n">death_tensors_stacked</span><span class="p">])</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="p">(</span><span class="n">train_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">weights</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">bias</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([-1.1449], grad_fn=&lt;AddBackward0&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">survive_loss_updated</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">targets</span><span class="p">):</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">targets</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">predictions</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_y</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">survived</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">death</span><span class="p">))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># dset =</span>
+
+<span class="n">dset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span><span class="n">train_y</span><span class="p">))</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">dset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">y</span>
+
+<span class="c1"># UPDATE DL SO THAT XB SHAPE AND YB SHAPE REFLECT WHAT WE WANT</span>
+<span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="n">dl</span><span class="p">)</span>
+<span class="n">xb</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">yb</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(torch.Size([8, 8]), torch.Size([8, 1]))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">twenty_percent_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/kaggle/input/titanic-survival-dataset/train.csv'</span><span class="p">)</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Sex'</span><span class="p">]</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'male'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'female'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked'</span><span class="p">]</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'S'</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'Q'</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked'</span><span class="p">]</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'S'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Q'</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">]</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">]</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="n">twenty_percent_df</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Sex'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">,</span> <span class="s1">'Fare'</span><span class="p">,</span> <span class="s1">'Embarked'</span><span class="p">,</span> <span class="s1">'Pclass'</span><span class="p">])</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">twenty_percent_df</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Cabin'</span><span class="p">,</span> <span class="s1">'PassengerId'</span><span class="p">,</span> <span class="s1">'Ticket'</span><span class="p">])</span>
+<span class="n">eighty_percent_df</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">180</span><span class="p">:]</span>
+<span class="n">twenty_percent_df</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">179</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#training</span>
+<span class="n">survived_label_train</span> <span class="o">=</span> <span class="n">eighty_percent_df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="n">death_label_train</span> <span class="o">=</span> <span class="n">eighty_percent_df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="n">survived_train</span> <span class="o">=</span> <span class="n">eighty_percent_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">survived_label_train</span><span class="p">]</span>
+<span class="n">death_train</span> <span class="o">=</span> <span class="n">eighty_percent_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">death_label_train</span><span class="p">]</span>
+<span class="n">stacked_survived_train</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">survived</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">num</span><span class="p">])</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">survived_train</span><span class="p">))]</span>
+<span class="n">stacked_death_train</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">death</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">num</span><span class="p">])</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">death_train</span><span class="p">))]</span>
+
+<span class="c1">#stack</span>
+<span class="n">survive_tensors_stacked_train</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">stacked_survived_train</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">death_tensors_stacked_train</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">stacked_death_train</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+
+<span class="c1">#validation</span>
+<span class="n">survived_label_validation</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="n">death_label_validation</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="p">[</span><span class="s1">'Survived'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="n">survived_validation</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">survived_label_validation</span><span class="p">]</span>
+<span class="n">death_validation</span> <span class="o">=</span> <span class="n">twenty_percent_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">death_label_validation</span><span class="p">]</span>
+<span class="n">stacked_survived_validation</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">survived</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">num</span><span class="p">])</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">survived</span><span class="p">))]</span>
+<span class="n">stacked_death_validation</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">death</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">num</span><span class="p">])</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">death</span><span class="p">))]</span>
+
+<span class="c1">#stack</span>
+<span class="n">survive_tensors_stacked_validation</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">stacked_survived_validation</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">death_tensors_stacked_validation</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">stacked_death_validation</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create training dl</span>
+<span class="n">train_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">survive_tensors_stacked_train</span><span class="p">,</span> <span class="n">death_tensors_stacked_train</span><span class="p">])</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">train_y</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">survived</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">death</span><span class="p">))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">dset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span><span class="n">train_y</span><span class="p">))</span>
+<span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># create validation dl</span>
+<span class="n">valid_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">survive_tensors_stacked_validation</span><span class="p">,</span> <span class="n">death_tensors_stacked_validation</span><span class="p">])</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">valid_y</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">survive_tensors_stacked_validation</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">death_tensors_stacked_validation</span><span class="p">))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">valid_dset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">valid_x</span><span class="p">,</span><span class="n">valid_y</span><span class="p">))</span>
+<span class="n">valid_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">valid_dset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># finally</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="n">DataLoaders</span><span class="p">(</span><span class="n">dl</span><span class="p">,</span> <span class="n">valid_dl</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">batch_accuracy</span><span class="p">(</span><span class="n">xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">):</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="n">xb</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">()</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="p">(</span><span class="n">preds</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">==</span> <span class="n">yb</span>
+    <span class="k">return</span> <span class="n">correct</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># neural net</span>
+<span class="n">simple_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="p">)</span>
+
+
+<span class="n">learn</span> <span class="o">=</span> <span class="n">Learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">simple_net</span><span class="p">,</span> <span class="n">opt_func</span><span class="o">=</span><span class="n">SGD</span><span class="p">,</span>
+                <span class="n">loss_func</span><span class="o">=</span><span class="n">survive_loss_updated</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">batch_accuracy</span><span class="p">)</span>
+
+<span class="n">learn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>batch_accuracy</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.509653</td>
+      <td>0.502687</td>
+      <td>0.473765</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.508797</td>
+      <td>0.502065</td>
+      <td>0.477132</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.507841</td>
+      <td>0.501465</td>
+      <td>0.477273</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.506854</td>
+      <td>0.500884</td>
+      <td>0.480079</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.505843</td>
+      <td>0.500287</td>
+      <td>0.480780</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0.504807</td>
+      <td>0.499660</td>
+      <td>0.482183</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0.503729</td>
+      <td>0.498991</td>
+      <td>0.482183</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>0.502581</td>
+      <td>0.498265</td>
+      <td>0.483025</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>0.501378</td>
+      <td>0.497482</td>
+      <td>0.485690</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>0.500111</td>
+      <td>0.496636</td>
+      <td>0.488356</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.498759</td>
+      <td>0.495647</td>
+      <td>0.488917</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>0.496819</td>
+      <td>0.493076</td>
+      <td>0.501403</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>0.492483</td>
+      <td>0.488248</td>
+      <td>0.542789</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>0.485624</td>
+      <td>0.480793</td>
+      <td>0.586700</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>0.475594</td>
+      <td>0.470186</td>
+      <td>0.586841</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>0.461520</td>
+      <td>0.455530</td>
+      <td>0.628367</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>0.443047</td>
+      <td>0.436796</td>
+      <td>0.638749</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>0.420336</td>
+      <td>0.414819</td>
+      <td>0.633979</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>0.394467</td>
+      <td>0.390664</td>
+      <td>0.637907</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>0.366764</td>
+      <td>0.363788</td>
+      <td>0.644220</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>0.336472</td>
+      <td>0.332068</td>
+      <td>0.709877</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>0.301700</td>
+      <td>0.296407</td>
+      <td>0.799102</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>0.266188</td>
+      <td>0.264302</td>
+      <td>0.799383</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>0.236447</td>
+      <td>0.239894</td>
+      <td>0.803030</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>0.215284</td>
+      <td>0.221003</td>
+      <td>0.808361</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>0.199868</td>
+      <td>0.205571</td>
+      <td>0.830107</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>0.187974</td>
+      <td>0.192608</td>
+      <td>0.840348</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>0.178303</td>
+      <td>0.181214</td>
+      <td>0.883558</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>0.170570</td>
+      <td>0.170600</td>
+      <td>0.889450</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>29</td>
+      <td>0.163774</td>
+      <td>0.160689</td>
+      <td>0.931257</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td>0.157617</td>
+      <td>0.151713</td>
+      <td>0.937009</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>31</td>
+      <td>0.152163</td>
+      <td>0.143193</td>
+      <td>0.944865</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>0.147052</td>
+      <td>0.135531</td>
+      <td>0.947952</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>33</td>
+      <td>0.142345</td>
+      <td>0.128379</td>
+      <td>0.949916</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>34</td>
+      <td>0.138021</td>
+      <td>0.121739</td>
+      <td>0.951459</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>35</td>
+      <td>0.134111</td>
+      <td>0.115172</td>
+      <td>0.951740</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>36</td>
+      <td>0.130328</td>
+      <td>0.109340</td>
+      <td>0.951740</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>37</td>
+      <td>0.126849</td>
+      <td>0.103617</td>
+      <td>0.951880</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>38</td>
+      <td>0.123680</td>
+      <td>0.098068</td>
+      <td>0.991583</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>39</td>
+      <td>0.120625</td>
+      <td>0.093022</td>
+      <td>0.996773</td>
+      <td>00:00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/kaggle/input/test-titanic/test.csv'</span><span class="p">)</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Sex'</span><span class="p">]</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Male'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'male'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'female'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked'</span><span class="p">]</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'S'</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'Q'</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked'</span><span class="p">]</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">'S'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'Q'</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">]</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Pclass'</span><span class="p">]</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Pclass1'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Pclass2'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+
+
+<span class="n">validdf</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+      <th>Male</th>
+      <th>Embarked_C</th>
+      <th>Embarked_S</th>
+      <th>Pclass1</th>
+      <th>Pclass2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>892</td>
+      <td>3</td>
+      <td>Kelly, Mr. James</td>
+      <td>male</td>
+      <td>34.5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>330911</td>
+      <td>7.8292</td>
+      <td>NaN</td>
+      <td>Q</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>893</td>
+      <td>3</td>
+      <td>Wilkes, Mrs. James (Ellen Needs)</td>
+      <td>female</td>
+      <td>47.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>363272</td>
+      <td>7.0000</td>
+      <td>NaN</td>
+      <td>S</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>894</td>
+      <td>2</td>
+      <td>Myles, Mr. Thomas Francis</td>
+      <td>male</td>
+      <td>62.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>240276</td>
+      <td>9.6875</td>
+      <td>NaN</td>
+      <td>Q</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>895</td>
+      <td>3</td>
+      <td>Wirz, Mr. Albert</td>
+      <td>male</td>
+      <td>27.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>315154</td>
+      <td>8.6625</td>
+      <td>NaN</td>
+      <td>S</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>896</td>
+      <td>3</td>
+      <td>Hirvonen, Mrs. Alexander (Helga E Lindqvist)</td>
+      <td>female</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3101298</td>
+      <td>12.2875</td>
+      <td>NaN</td>
+      <td>S</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>413</th>
+      <td>1305</td>
+      <td>3</td>
+      <td>Spector, Mr. Woolf</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>A.5. 3236</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>414</th>
+      <td>1306</td>
+      <td>1</td>
+      <td>Oliva y Ocana, Dona. Fermina</td>
+      <td>female</td>
+      <td>39.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17758</td>
+      <td>108.9000</td>
+      <td>C105</td>
+      <td>C</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>415</th>
+      <td>1307</td>
+      <td>3</td>
+      <td>Saether, Mr. Simon Sivertsen</td>
+      <td>male</td>
+      <td>38.5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>SOTON/O.Q. 3101262</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>416</th>
+      <td>1308</td>
+      <td>3</td>
+      <td>Ware, Mr. Frederick</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>359309</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>417</th>
+      <td>1309</td>
+      <td>3</td>
+      <td>Peter, Master. Michael J</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2668</td>
+      <td>22.3583</td>
+      <td>NaN</td>
+      <td>C</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>418 rows × 16 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="c1"># maxAge, maxFare = max(validdf['Age']), max(validdf['Fare'])</span>
+<span class="c1"># validdf['Age_N'] = validdf['Age'] / maxAge</span>
+<span class="c1"># validdf['log_Fare'] = validdf['Fare'] / maxFare</span>
+<span class="c1"># validdf['log_Fare'] = np.log10(df['log_Fare'] + 1)</span>
+
+<span class="c1"># model_df['Survived'] = df['Survived']</span>
+<span class="n">validdf</span> <span class="o">=</span> <span class="n">validdf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Sex'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">,</span> <span class="s1">'Fare'</span><span class="p">,</span> <span class="s1">'Embarked'</span><span class="p">,</span> <span class="s1">'Pclass'</span><span class="p">])</span>
+<span class="c1"># model_df['Age_N'] = model_df['Age_N'].fillna(0)</span>
+
+
+<span class="c1"># copydf = model_df</span>
+<span class="c1"># copydf = copydf.drop(columns=['Age_N', 'log_Fare', 'Ones', 'Linear', 'Loss'])</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># we now have a single tensor that was created from calling tensor over all of our labelled rows of data using tensor()</span>
+<span class="c1"># survived_label_valid = validdf['Survived'] == 1</span>
+<span class="c1"># death_label_valid = validdf['Survived'] == 0</span>
+<span class="c1"># survived_valid = validdf.loc[survived_label]</span>
+<span class="c1"># survived['Embarked_S'] = survived['Embarked_S'].fillna(0)</span>
+<span class="c1"># survived['Embarked_C'] = survived['Embarked_C'].fillna(0)</span>
+<span class="c1"># death_valid = validdf.loc[death_label]</span>
+<span class="c1"># num = range(len(survived))</span>
+<span class="c1"># nums = range(len(death))</span>
+<span class="n">stacked_pass_valid</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">validdf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">num</span><span class="p">])</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">validdf</span><span class="p">))]</span>
+<span class="c1"># stacked_death_valid = [tensor(death_valid.iloc[num]) for num in range(len(death_valid))]</span>
+<span class="c1"># stacked_survived.shape, stacked_death.shape</span>
+<span class="c1"># len(stacked_death_valid), len(stacked_survived_valid)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">/tmp/ipykernel_17/612449954.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-red-fg"># num = range(len(survived))</span>
+<span class="ansi-green-intense-fg ansi-bold">     24</span> <span class="ansi-red-fg"># nums = range(len(death))</span>
+<span class="ansi-green-fg">---&gt; 25</span><span class="ansi-red-fg"> </span>stacked_pass_valid <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>tensor<span class="ansi-blue-fg">(</span>validdf<span class="ansi-blue-fg">.</span>iloc<span class="ansi-blue-fg">[</span>num<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> num <span class="ansi-green-fg">in</span> range<span class="ansi-blue-fg">(</span>len<span class="ansi-blue-fg">(</span>validdf<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">     26</span> <span class="ansi-red-fg"># stacked_death_valid = [tensor(death_valid.iloc[num]) for num in range(len(death_valid))]</span>
+<span class="ansi-green-intense-fg ansi-bold">     27</span> <span class="ansi-red-fg"># stacked_survived.shape, stacked_death.shape</span>
+
+<span class="ansi-green-fg">/tmp/ipykernel_17/612449954.py</span> in <span class="ansi-cyan-fg">&lt;listcomp&gt;</span><span class="ansi-blue-fg">(.0)</span>
+<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-red-fg"># num = range(len(survived))</span>
+<span class="ansi-green-intense-fg ansi-bold">     24</span> <span class="ansi-red-fg"># nums = range(len(death))</span>
+<span class="ansi-green-fg">---&gt; 25</span><span class="ansi-red-fg"> </span>stacked_pass_valid <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>tensor<span class="ansi-blue-fg">(</span>validdf<span class="ansi-blue-fg">.</span>iloc<span class="ansi-blue-fg">[</span>num<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> num <span class="ansi-green-fg">in</span> range<span class="ansi-blue-fg">(</span>len<span class="ansi-blue-fg">(</span>validdf<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">     26</span> <span class="ansi-red-fg"># stacked_death_valid = [tensor(death_valid.iloc[num]) for num in range(len(death_valid))]</span>
+<span class="ansi-green-intense-fg ansi-bold">     27</span> <span class="ansi-red-fg"># stacked_survived.shape, stacked_death.shape</span>
+
+<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/fastai/torch_core.py</span> in <span class="ansi-cyan-fg">tensor</span><span class="ansi-blue-fg">(x, *rest, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    148</span>            <span class="ansi-green-fg">else</span> torch<span class="ansi-blue-fg">.</span>tensor<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> isinstance<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">(</span>tuple<span class="ansi-blue-fg">,</span>list<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    149</span>            <span class="ansi-green-fg">else</span> _array2tensor<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> isinstance<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> ndarray<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 150</span><span class="ansi-red-fg">            </span><span class="ansi-green-fg">else</span> as_tensor<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> isinstance<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">(</span>pd<span class="ansi-blue-fg">.</span>Series<span class="ansi-blue-fg">,</span> pd<span class="ansi-blue-fg">.</span>DataFrame<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    151</span> <span class="ansi-red-fg">#            else as_tensor(array(x, **kwargs)) if hasattr(x, '__array__') or is_iter(x)</span>
+<span class="ansi-green-intense-fg ansi-bold">    152</span>            else _array2tensor(array(x), **kwargs))
+
+<span class="ansi-red-fg">TypeError</span>: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">validdf</span> <span class="o">=</span> <span class="n">validdf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Cabin'</span><span class="p">,</span> <span class="s1">'PassengerId'</span><span class="p">,</span> <span class="s1">'Ticket'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stacked_pass_valid</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensor</span><span class="p">(</span><span class="n">validdf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">num</span><span class="p">])</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">validdf</span><span class="p">))]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">validdf</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Male</th>
+      <th>Embarked_C</th>
+      <th>Embarked_S</th>
+      <th>Pclass1</th>
+      <th>Pclass2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>413</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>414</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>415</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>416</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>417</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>418 rows × 7 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">valid_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">survive_tensors_stacked</span><span class="p">,</span> <span class="n">death_tensors_stacked</span><span class="p">])</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">valid_y</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">survive_tensors_stacked</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">death_tensors_stacked</span><span class="p">))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">valid_dset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">valid_x</span><span class="p">,</span><span class="n">valid_y</span><span class="p">))</span>
+<span class="n">valid_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">valid_dset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">418</span><span class="p">)</span>
+
+<span class="c1"># need both dl, valid dl and dl</span>
+<span class="c1"># then </span>
+<span class="n">linear_model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">opt</span> <span class="o">=</span> <span class="n">SGD</span><span class="p">(</span><span class="n">linear_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="p">)</span>
+<span class="c1"># train_model(linear_model, 20)</span>
+<span class="c1">#pass in the training and validatin data here</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="n">DataLoaders</span><span class="p">(</span><span class="n">dl</span><span class="p">,</span> <span class="n">valid_dl</span><span class="p">)</span>
+<span class="c1">#finally </span>
+
+<span class="c1"># batch accuracy is optional </span>
+<span class="k">def</span> <span class="nf">batch_accuracy</span><span class="p">(</span><span class="n">xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">):</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="n">xb</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">()</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="p">(</span><span class="n">preds</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">==</span> <span class="n">yb</span>
+    <span class="k">return</span> <span class="n">correct</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">learn</span> <span class="o">=</span> <span class="n">Learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">opt_func</span><span class="o">=</span><span class="n">SGD</span><span class="p">,</span>
+                <span class="n">loss_func</span><span class="o">=</span><span class="n">survive_loss_updated</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">batch_accuracy</span><span class="p">)</span>
+
+<span class="n">learn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>batch_accuracy</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.462106</td>
+      <td>0.474574</td>
+      <td>0.640853</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.462066</td>
+      <td>0.474545</td>
+      <td>0.640853</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.462022</td>
+      <td>0.474515</td>
+      <td>0.640853</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.461978</td>
+      <td>0.474486</td>
+      <td>0.640853</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.461934</td>
+      <td>0.474457</td>
+      <td>0.640853</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0.461889</td>
+      <td>0.474427</td>
+      <td>0.640853</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0.461845</td>
+      <td>0.474398</td>
+      <td>0.640853</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>0.461801</td>
+      <td>0.474368</td>
+      <td>0.640853</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>0.461756</td>
+      <td>0.474339</td>
+      <td>0.640853</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>0.461712</td>
+      <td>0.474310</td>
+      <td>0.640853</td>
+      <td>00:00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">simple_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="p">)</span>
+
+
+<span class="n">learn</span> <span class="o">=</span> <span class="n">Learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">simple_net</span><span class="p">,</span> <span class="n">opt_func</span><span class="o">=</span><span class="n">SGD</span><span class="p">,</span>
+                <span class="n">loss_func</span><span class="o">=</span><span class="n">survive_loss_updated</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">batch_accuracy</span><span class="p">)</span>
+
+<span class="n">learn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>batch_accuracy</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.477024</td>
+      <td>0.488728</td>
+      <td>0.552048</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.465068</td>
+      <td>0.484222</td>
+      <td>0.579966</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.452527</td>
+      <td>0.479878</td>
+      <td>0.579265</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.440095</td>
+      <td>0.475671</td>
+      <td>0.583894</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.427957</td>
+      <td>0.471588</td>
+      <td>0.584175</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0.416164</td>
+      <td>0.467649</td>
+      <td>0.586420</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0.404775</td>
+      <td>0.463854</td>
+      <td>0.585999</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>0.393790</td>
+      <td>0.460202</td>
+      <td>0.586560</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>0.383232</td>
+      <td>0.456691</td>
+      <td>0.586700</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>0.373102</td>
+      <td>0.453315</td>
+      <td>0.617144</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>0.363406</td>
+      <td>0.450072</td>
+      <td>0.621633</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>0.354151</td>
+      <td>0.446956</td>
+      <td>0.621352</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>0.345341</td>
+      <td>0.443954</td>
+      <td>0.621493</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>0.336966</td>
+      <td>0.441063</td>
+      <td>0.620932</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>0.329048</td>
+      <td>0.438224</td>
+      <td>0.623317</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>0.321520</td>
+      <td>0.435297</td>
+      <td>0.623597</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>0.314350</td>
+      <td>0.432160</td>
+      <td>0.624018</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>0.307599</td>
+      <td>0.428523</td>
+      <td>0.626263</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>0.301146</td>
+      <td>0.423695</td>
+      <td>0.628928</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>0.294620</td>
+      <td>0.415390</td>
+      <td>0.643098</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>0.286420</td>
+      <td>0.401846</td>
+      <td>0.657828</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>0.275414</td>
+      <td>0.380488</td>
+      <td>0.696549</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>0.259564</td>
+      <td>0.348015</td>
+      <td>0.740881</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>0.237341</td>
+      <td>0.304325</td>
+      <td>0.817059</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>0.210966</td>
+      <td>0.255090</td>
+      <td>0.860550</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>0.184133</td>
+      <td>0.202349</td>
+      <td>0.902637</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>0.156528</td>
+      <td>0.147107</td>
+      <td>0.988636</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>0.132545</td>
+      <td>0.112562</td>
+      <td>1.000000</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>0.117088</td>
+      <td>0.095011</td>
+      <td>1.000000</td>
+      <td>00:00</td>
+    </tr>
+    <tr>
+      <td>29</td>
+      <td>0.106355</td>
+      <td>0.083928</td>
+      <td>1.000000</td>
+      <td>00:00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1.0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><a class="u-url" href="/fastaiMLmodel/fastpages/jupyter/2022/09/16/regression-model-NN-model.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/fastaiMLmodel/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/fastaiMLmodel/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/fastaiMLmodel/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/ericvincent18" target="_blank" title="ericvincent18"><svg class="svg-icon grey"><use xlink:href="/fastaiMLmodel/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
