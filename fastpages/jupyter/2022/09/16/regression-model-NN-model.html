@@ -82,7 +82,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      20 min read
+      14 min read
     
 </span></p>
 
@@ -656,118 +656,6 @@ window.onload = wrap_img;
 </pre></div>
 
     </div>
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<details class="description">
-      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
-        <p></p>
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">fastbook</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-    </details>
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Requirement already satisfied: fastbook in /opt/conda/lib/python3.7/site-packages (0.0.28)
-Requirement already satisfied: pip in /opt/conda/lib/python3.7/site-packages (from fastbook) (22.1.2)
-Requirement already satisfied: graphviz in /opt/conda/lib/python3.7/site-packages (from fastbook) (0.8.4)
-Requirement already satisfied: requests in /opt/conda/lib/python3.7/site-packages (from fastbook) (2.28.1)
-Requirement already satisfied: sentencepiece in /opt/conda/lib/python3.7/site-packages (from fastbook) (0.1.97)
-Requirement already satisfied: pandas in /opt/conda/lib/python3.7/site-packages (from fastbook) (1.3.5)
-Requirement already satisfied: packaging in /opt/conda/lib/python3.7/site-packages (from fastbook) (21.3)
-Requirement already satisfied: datasets in /opt/conda/lib/python3.7/site-packages (from fastbook) (2.1.0)
-Requirement already satisfied: fastai&gt;=2.6 in /opt/conda/lib/python3.7/site-packages (from fastbook) (2.7.9)
-Requirement already satisfied: transformers in /opt/conda/lib/python3.7/site-packages (from fastbook) (4.20.1)
-Requirement already satisfied: matplotlib in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (3.5.3)
-Requirement already satisfied: scikit-learn in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (1.0.2)
-Requirement already satisfied: pillow&gt;6.0.0 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (9.1.1)
-Requirement already satisfied: torchvision&gt;=0.8.2 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (0.12.0)
-Requirement already satisfied: pyyaml in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (6.0)
-Requirement already satisfied: fastdownload&lt;2,&gt;=0.0.5 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (0.0.7)
-Requirement already satisfied: fastcore&lt;1.6,&gt;=1.4.5 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (1.5.26)
-Requirement already satisfied: spacy&lt;4 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (3.3.1)
-Requirement already satisfied: fastprogress&gt;=0.2.4 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (1.0.3)
-Requirement already satisfied: scipy in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (1.7.3)
-Requirement already satisfied: torch&lt;1.14,&gt;=1.7 in /opt/conda/lib/python3.7/site-packages (from fastai&gt;=2.6-&gt;fastbook) (1.11.0)
-Requirement already satisfied: fsspec[http]&gt;=2021.05.0 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (2022.8.2)
-Requirement already satisfied: multiprocess in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (0.70.13)
-Requirement already satisfied: responses&lt;0.19 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (0.18.0)
-Requirement already satisfied: tqdm&gt;=4.62.1 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (4.64.0)
-Requirement already satisfied: numpy&gt;=1.17 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (1.21.6)
-Requirement already satisfied: dill in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (0.3.5.1)
-Requirement already satisfied: aiohttp in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (3.8.1)
-Requirement already satisfied: importlib-metadata in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (4.12.0)
-Requirement already satisfied: pyarrow&gt;=5.0.0 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (5.0.0)
-Requirement already satisfied: huggingface-hub&lt;1.0.0,&gt;=0.1.0 in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (0.8.1)
-Requirement already satisfied: xxhash in /opt/conda/lib/python3.7/site-packages (from datasets-&gt;fastbook) (3.0.0)
-Requirement already satisfied: charset-normalizer&lt;3,&gt;=2 in /opt/conda/lib/python3.7/site-packages (from requests-&gt;fastbook) (2.1.0)
-Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /opt/conda/lib/python3.7/site-packages (from requests-&gt;fastbook) (1.26.12)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/conda/lib/python3.7/site-packages (from requests-&gt;fastbook) (2022.6.15.2)
-Requirement already satisfied: idna&lt;4,&gt;=2.5 in /opt/conda/lib/python3.7/site-packages (from requests-&gt;fastbook) (3.3)
-Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in /opt/conda/lib/python3.7/site-packages (from packaging-&gt;fastbook) (3.0.9)
-Requirement already satisfied: python-dateutil&gt;=2.7.3 in /opt/conda/lib/python3.7/site-packages (from pandas-&gt;fastbook) (2.8.2)
-Requirement already satisfied: pytz&gt;=2017.3 in /opt/conda/lib/python3.7/site-packages (from pandas-&gt;fastbook) (2022.1)
-Requirement already satisfied: regex!=2019.12.17 in /opt/conda/lib/python3.7/site-packages (from transformers-&gt;fastbook) (2021.11.10)
-Requirement already satisfied: tokenizers!=0.11.3,&lt;0.13,&gt;=0.11.1 in /opt/conda/lib/python3.7/site-packages (from transformers-&gt;fastbook) (0.12.1)
-Requirement already satisfied: filelock in /opt/conda/lib/python3.7/site-packages (from transformers-&gt;fastbook) (3.7.1)
-Requirement already satisfied: attrs&gt;=17.3.0 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (21.4.0)
-Requirement already satisfied: aiosignal&gt;=1.1.2 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (1.2.0)
-Requirement already satisfied: asynctest==0.13.0 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (0.13.0)
-Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (1.7.2)
-Requirement already satisfied: frozenlist&gt;=1.1.1 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (1.3.0)
-Requirement already satisfied: async-timeout&lt;5.0,&gt;=4.0.0a3 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (4.0.2)
-Requirement already satisfied: multidict&lt;7.0,&gt;=4.5 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (6.0.2)
-Requirement already satisfied: typing-extensions&gt;=3.7.4 in /opt/conda/lib/python3.7/site-packages (from aiohttp-&gt;datasets-&gt;fastbook) (4.1.1)
-Requirement already satisfied: six&gt;=1.5 in /opt/conda/lib/python3.7/site-packages (from python-dateutil&gt;=2.7.3-&gt;pandas-&gt;fastbook) (1.15.0)
-Requirement already satisfied: blis&lt;0.8.0,&gt;=0.4.0 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (0.7.8)
-Requirement already satisfied: srsly&lt;3.0.0,&gt;=2.4.3 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (2.4.4)
-Requirement already satisfied: jinja2 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (3.1.2)
-Requirement already satisfied: wasabi&lt;1.1.0,&gt;=0.9.1 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (0.10.1)
-Requirement already satisfied: langcodes&lt;4.0.0,&gt;=3.2.0 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (3.3.0)
-Requirement already satisfied: setuptools in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (59.8.0)
-Requirement already satisfied: murmurhash&lt;1.1.0,&gt;=0.28.0 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (1.0.8)
-Requirement already satisfied: pydantic!=1.8,!=1.8.1,&lt;1.9.0,&gt;=1.7.4 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (1.8.2)
-Requirement already satisfied: spacy-loggers&lt;2.0.0,&gt;=1.0.0 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (1.0.3)
-Requirement already satisfied: preshed&lt;3.1.0,&gt;=3.0.2 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (3.0.7)
-Requirement already satisfied: catalogue&lt;2.1.0,&gt;=2.0.6 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (2.0.8)
-Requirement already satisfied: spacy-legacy&lt;3.1.0,&gt;=3.0.9 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (3.0.10)
-Requirement already satisfied: cymem&lt;2.1.0,&gt;=2.0.2 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (2.0.6)
-Requirement already satisfied: typer&lt;0.5.0,&gt;=0.3.0 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (0.4.2)
-Requirement already satisfied: thinc&lt;8.1.0,&gt;=8.0.14 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (8.0.17)
-Requirement already satisfied: pathy&gt;=0.3.5 in /opt/conda/lib/python3.7/site-packages (from spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (0.6.2)
-Requirement already satisfied: zipp&gt;=0.5 in /opt/conda/lib/python3.7/site-packages (from importlib-metadata-&gt;datasets-&gt;fastbook) (3.8.0)
-Requirement already satisfied: cycler&gt;=0.10 in /opt/conda/lib/python3.7/site-packages (from matplotlib-&gt;fastai&gt;=2.6-&gt;fastbook) (0.11.0)
-Requirement already satisfied: fonttools&gt;=4.22.0 in /opt/conda/lib/python3.7/site-packages (from matplotlib-&gt;fastai&gt;=2.6-&gt;fastbook) (4.33.3)
-Requirement already satisfied: kiwisolver&gt;=1.0.1 in /opt/conda/lib/python3.7/site-packages (from matplotlib-&gt;fastai&gt;=2.6-&gt;fastbook) (1.4.3)
-Requirement already satisfied: joblib&gt;=0.11 in /opt/conda/lib/python3.7/site-packages (from scikit-learn-&gt;fastai&gt;=2.6-&gt;fastbook) (1.0.1)
-Requirement already satisfied: threadpoolctl&gt;=2.0.0 in /opt/conda/lib/python3.7/site-packages (from scikit-learn-&gt;fastai&gt;=2.6-&gt;fastbook) (3.1.0)
-Requirement already satisfied: smart-open&lt;6.0.0,&gt;=5.2.1 in /opt/conda/lib/python3.7/site-packages (from pathy&gt;=0.3.5-&gt;spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (5.2.1)
-Requirement already satisfied: click&lt;9.0.0,&gt;=7.1.1 in /opt/conda/lib/python3.7/site-packages (from typer&lt;0.5.0,&gt;=0.3.0-&gt;spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (8.0.4)
-Requirement already satisfied: MarkupSafe&gt;=2.0 in /opt/conda/lib/python3.7/site-packages (from jinja2-&gt;spacy&lt;4-&gt;fastai&gt;=2.6-&gt;fastbook) (2.1.1)
-<span class="ansi-yellow-fg">WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv</span><span class="ansi-yellow-fg">
-</span>Note: you may need to restart the kernel to use updated packages.
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -3455,91 +3343,6 @@ Requirement already satisfied: MarkupSafe&gt;=2.0 in /opt/conda/lib/python3.7/si
 </div>
 </div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<details class="description">
-      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
-        <p></p>
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># maxAge, maxFare = max(validdf['Age']), max(validdf['Fare'])</span>
-<span class="c1"># validdf['Age_N'] = validdf['Age'] / maxAge</span>
-<span class="c1"># validdf['log_Fare'] = validdf['Fare'] / maxFare</span>
-<span class="c1"># validdf['log_Fare'] = np.log10(df['log_Fare'] + 1)</span>
-
-<span class="c1"># model_df['Survived'] = df['Survived']</span>
-<span class="n">validdf</span> <span class="o">=</span> <span class="n">validdf</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Sex'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">,</span> <span class="s1">'Fare'</span><span class="p">,</span> <span class="s1">'Embarked'</span><span class="p">,</span> <span class="s1">'Pclass'</span><span class="p">])</span>
-<span class="c1"># model_df['Age_N'] = model_df['Age_N'].fillna(0)</span>
-
-
-<span class="c1"># copydf = model_df</span>
-<span class="c1"># copydf = copydf.drop(columns=['Age_N', 'log_Fare', 'Ones', 'Linear', 'Loss'])</span>
-<span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_S'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span> <span class="o">=</span> <span class="n">validdf</span><span class="p">[</span><span class="s1">'Embarked_C'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># we now have a single tensor that was created from calling tensor over all of our labelled rows of data using tensor()</span>
-<span class="c1"># survived_label_valid = validdf['Survived'] == 1</span>
-<span class="c1"># death_label_valid = validdf['Survived'] == 0</span>
-<span class="c1"># survived_valid = validdf.loc[survived_label]</span>
-<span class="c1"># survived['Embarked_S'] = survived['Embarked_S'].fillna(0)</span>
-<span class="c1"># survived['Embarked_C'] = survived['Embarked_C'].fillna(0)</span>
-<span class="c1"># death_valid = validdf.loc[death_label]</span>
-<span class="c1"># num = range(len(survived))</span>
-<span class="c1"># nums = range(len(death))</span>
-<span class="c1"># stacked_pass_valid = [tensor(validdf.iloc[num]) for num in range(len(validdf))]</span>
-<span class="c1"># stacked_death_valid = [tensor(death_valid.iloc[num]) for num in range(len(death_valid))]</span>
-<span class="c1"># stacked_survived.shape, stacked_death.shape</span>
-<span class="c1"># len(stacked_death_valid), len(stacked_survived_valid)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-    </details>
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">/tmp/ipykernel_17/612449954.py</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-red-fg"># num = range(len(survived))</span>
-<span class="ansi-green-intense-fg ansi-bold">     24</span> <span class="ansi-red-fg"># nums = range(len(death))</span>
-<span class="ansi-green-fg">---&gt; 25</span><span class="ansi-red-fg"> </span>stacked_pass_valid <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>tensor<span class="ansi-blue-fg">(</span>validdf<span class="ansi-blue-fg">.</span>iloc<span class="ansi-blue-fg">[</span>num<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> num <span class="ansi-green-fg">in</span> range<span class="ansi-blue-fg">(</span>len<span class="ansi-blue-fg">(</span>validdf<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">     26</span> <span class="ansi-red-fg"># stacked_death_valid = [tensor(death_valid.iloc[num]) for num in range(len(death_valid))]</span>
-<span class="ansi-green-intense-fg ansi-bold">     27</span> <span class="ansi-red-fg"># stacked_survived.shape, stacked_death.shape</span>
-
-<span class="ansi-green-fg">/tmp/ipykernel_17/612449954.py</span> in <span class="ansi-cyan-fg">&lt;listcomp&gt;</span><span class="ansi-blue-fg">(.0)</span>
-<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-red-fg"># num = range(len(survived))</span>
-<span class="ansi-green-intense-fg ansi-bold">     24</span> <span class="ansi-red-fg"># nums = range(len(death))</span>
-<span class="ansi-green-fg">---&gt; 25</span><span class="ansi-red-fg"> </span>stacked_pass_valid <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>tensor<span class="ansi-blue-fg">(</span>validdf<span class="ansi-blue-fg">.</span>iloc<span class="ansi-blue-fg">[</span>num<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> num <span class="ansi-green-fg">in</span> range<span class="ansi-blue-fg">(</span>len<span class="ansi-blue-fg">(</span>validdf<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">     26</span> <span class="ansi-red-fg"># stacked_death_valid = [tensor(death_valid.iloc[num]) for num in range(len(death_valid))]</span>
-<span class="ansi-green-intense-fg ansi-bold">     27</span> <span class="ansi-red-fg"># stacked_survived.shape, stacked_death.shape</span>
-
-<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/fastai/torch_core.py</span> in <span class="ansi-cyan-fg">tensor</span><span class="ansi-blue-fg">(x, *rest, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    148</span>            <span class="ansi-green-fg">else</span> torch<span class="ansi-blue-fg">.</span>tensor<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> isinstance<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">(</span>tuple<span class="ansi-blue-fg">,</span>list<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    149</span>            <span class="ansi-green-fg">else</span> _array2tensor<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> isinstance<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> ndarray<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">--&gt; 150</span><span class="ansi-red-fg">            </span><span class="ansi-green-fg">else</span> as_tensor<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> isinstance<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">(</span>pd<span class="ansi-blue-fg">.</span>Series<span class="ansi-blue-fg">,</span> pd<span class="ansi-blue-fg">.</span>DataFrame<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    151</span> <span class="ansi-red-fg">#            else as_tensor(array(x, **kwargs)) if hasattr(x, '__array__') or is_iter(x)</span>
-<span class="ansi-green-intense-fg ansi-bold">    152</span>            else _array2tensor(array(x), **kwargs))
-
-<span class="ansi-red-fg">TypeError</span>: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.</pre>
-</div>
 </div>
 
 </div>
