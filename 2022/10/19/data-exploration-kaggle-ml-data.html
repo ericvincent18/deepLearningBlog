@@ -1,0 +1,2797 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Title | Data Science Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Title" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<meta property="og:description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<link rel="canonical" href="https://ericvincent18.github.io/fastaiMLmodel/2022/10/19/data-exploration-kaggle-ml-data.html" />
+<meta property="og:url" content="https://ericvincent18.github.io/fastaiMLmodel/2022/10/19/data-exploration-kaggle-ml-data.html" />
+<meta property="og:site_name" content="Data Science Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-10-19T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Title" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-10-19T00:00:00-05:00","datePublished":"2022-10-19T00:00:00-05:00","description":"An easy to use blogging platform with support for Jupyter Notebooks.","headline":"Title","mainEntityOfPage":{"@type":"WebPage","@id":"https://ericvincent18.github.io/fastaiMLmodel/2022/10/19/data-exploration-kaggle-ml-data.html"},"url":"https://ericvincent18.github.io/fastaiMLmodel/2022/10/19/data-exploration-kaggle-ml-data.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/fastaiMLmodel/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://ericvincent18.github.io/fastaiMLmodel/feed.xml" title="Data Science Blog" /><link rel="shortcut icon" type="image/x-icon" href="/fastaiMLmodel/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/fastaiMLmodel/">Data Science Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/fastaiMLmodel/about/">About Me</a><a class="page-link" href="/fastaiMLmodel/search/">Search</a><a class="page-link" href="/fastaiMLmodel/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Title</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-10-19T00:00:00-05:00" itemprop="datePublished">
+        Oct 19, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      65 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/ericvincent18/fastaiMLmodel/tree/master/_notebooks/2022-10-19-data-exploration-kaggle-ml-data.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/fastaiMLmodel/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/ericvincent18/fastaiMLmodel/master?filepath=_notebooks%2F2022-10-19-data-exploration-kaggle-ml-data.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/fastaiMLmodel/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/ericvincent18/fastaiMLmodel/blob/master/_notebooks/2022-10-19-data-exploration-kaggle-ml-data.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/fastaiMLmodel/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fericvincent18%2FfastaiMLmodel%2Fblob%2Fmaster%2F_notebooks%2F2022-10-19-data-exploration-kaggle-ml-data.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/fastaiMLmodel/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-10-19-data-exploration-kaggle-ml-data.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1"># linear algebra</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># data processing, CSV file I/O (e.g. pd.read_csv)</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="k">for</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s1">&#39;/kaggle/input&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>/kaggle/input/kaggle-survey-2022/kaggle_survey_2022_responses.csv
+/kaggle/input/kaggle-survey-2022/Supplementary Data/kaggle_survey_2022_methodology.pdf
+/kaggle/input/kaggle-survey-2022/Supplementary Data/kaggle_survey_2022_answer_choices.pdf
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;/kaggle/input/kaggle-survey-2022/kaggle_survey_2022_responses.csv&#39;</span><span class="p">,</span> <span class="n">low_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Duration (in seconds)</th>
+      <th>Q2</th>
+      <th>Q3</th>
+      <th>Q4</th>
+      <th>Q5</th>
+      <th>Q6_1</th>
+      <th>Q6_2</th>
+      <th>Q6_3</th>
+      <th>Q6_4</th>
+      <th>Q6_5</th>
+      <th>...</th>
+      <th>Q44_3</th>
+      <th>Q44_4</th>
+      <th>Q44_5</th>
+      <th>Q44_6</th>
+      <th>Q44_7</th>
+      <th>Q44_8</th>
+      <th>Q44_9</th>
+      <th>Q44_10</th>
+      <th>Q44_11</th>
+      <th>Q44_12</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Duration (in seconds)</td>
+      <td>What is your age (# years)?</td>
+      <td>What is your gender? - Selected Choice</td>
+      <td>In which country do you currently reside?</td>
+      <td>Are you currently a student? (high school, uni...</td>
+      <td>On which platforms have you begun or completed...</td>
+      <td>On which platforms have you begun or completed...</td>
+      <td>On which platforms have you begun or completed...</td>
+      <td>On which platforms have you begun or completed...</td>
+      <td>On which platforms have you begun or completed...</td>
+      <td>...</td>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>Who/what are your favorite media sources that ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>121</td>
+      <td>30-34</td>
+      <td>Man</td>
+      <td>India</td>
+      <td>No</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>462</td>
+      <td>30-34</td>
+      <td>Man</td>
+      <td>Algeria</td>
+      <td>No</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>293</td>
+      <td>18-21</td>
+      <td>Man</td>
+      <td>Egypt</td>
+      <td>Yes</td>
+      <td>Coursera</td>
+      <td>edX</td>
+      <td>NaN</td>
+      <td>DataCamp</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>Kaggle (notebooks, forums, etc)</td>
+      <td>NaN</td>
+      <td>YouTube (Kaggle YouTube, Cloud AI Adventures, ...</td>
+      <td>Podcasts (Chai Time Data Science, O’Reilly Dat...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>851</td>
+      <td>55-59</td>
+      <td>Man</td>
+      <td>France</td>
+      <td>No</td>
+      <td>Coursera</td>
+      <td>NaN</td>
+      <td>Kaggle Learn Courses</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>Kaggle (notebooks, forums, etc)</td>
+      <td>Course Forums (forums.fast.ai, Coursera forums...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Blogs (Towards Data Science, Analytics Vidhya,...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 296 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Duration (in seconds)</th>
+      <th>Q2</th>
+      <th>Q3</th>
+      <th>Q4</th>
+      <th>Q5</th>
+      <th>Q6_1</th>
+      <th>Q6_2</th>
+      <th>Q6_3</th>
+      <th>Q6_4</th>
+      <th>Q6_5</th>
+      <th>...</th>
+      <th>Q44_3</th>
+      <th>Q44_4</th>
+      <th>Q44_5</th>
+      <th>Q44_6</th>
+      <th>Q44_7</th>
+      <th>Q44_8</th>
+      <th>Q44_9</th>
+      <th>Q44_10</th>
+      <th>Q44_11</th>
+      <th>Q44_12</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>23998</td>
+      <td>23998</td>
+      <td>23998</td>
+      <td>23998</td>
+      <td>23998</td>
+      <td>9700</td>
+      <td>2475</td>
+      <td>6629</td>
+      <td>3719</td>
+      <td>945</td>
+      <td>...</td>
+      <td>2679</td>
+      <td>11182</td>
+      <td>4007</td>
+      <td>11958</td>
+      <td>2121</td>
+      <td>7767</td>
+      <td>3805</td>
+      <td>1727</td>
+      <td>1269</td>
+      <td>836</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>3530</td>
+      <td>12</td>
+      <td>6</td>
+      <td>59</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>...</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>272</td>
+      <td>18-21</td>
+      <td>Man</td>
+      <td>India</td>
+      <td>No</td>
+      <td>Coursera</td>
+      <td>edX</td>
+      <td>Kaggle Learn Courses</td>
+      <td>DataCamp</td>
+      <td>Fast.ai</td>
+      <td>...</td>
+      <td>Reddit (r/machinelearning, etc)</td>
+      <td>Kaggle (notebooks, forums, etc)</td>
+      <td>Course Forums (forums.fast.ai, Coursera forums...</td>
+      <td>YouTube (Kaggle YouTube, Cloud AI Adventures, ...</td>
+      <td>Podcasts (Chai Time Data Science, O’Reilly Dat...</td>
+      <td>Blogs (Towards Data Science, Analytics Vidhya,...</td>
+      <td>Journal Publications (peer-reviewed journals, ...</td>
+      <td>Slack Communities (ods.ai, kagglenoobs, etc)</td>
+      <td>None</td>
+      <td>Other</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>63</td>
+      <td>4559</td>
+      <td>18266</td>
+      <td>8792</td>
+      <td>12036</td>
+      <td>9699</td>
+      <td>2474</td>
+      <td>6628</td>
+      <td>3718</td>
+      <td>944</td>
+      <td>...</td>
+      <td>2678</td>
+      <td>11181</td>
+      <td>4006</td>
+      <td>11957</td>
+      <td>2120</td>
+      <td>7766</td>
+      <td>3804</td>
+      <td>1726</td>
+      <td>1268</td>
+      <td>835</td>
+    </tr>
+  </tbody>
+</table>
+<p>4 rows × 296 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">questions</span> <span class="o">=</span> <span class="p">[</span><span class="n">question</span> <span class="k">for</span> <span class="n">question</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">questions</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;Duration (in seconds)&#39;,
+ &#39;What is your age (# years)?&#39;,
+ &#39;What is your gender? - Selected Choice&#39;,
+ &#39;In which country do you currently reside?&#39;,
+ &#39;Are you currently a student? (high school, university, or graduate)&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - Coursera&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - edX&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - Kaggle Learn Courses&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - DataCamp&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - Fast.ai&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - Udacity&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - Udemy&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - LinkedIn Learning&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - Cloud-certification programs (direct from AWS, Azure, GCP, or similar)&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - University Courses (resulting in a university degree)&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - None&#39;,
+ &#39;On which platforms have you begun or completed data science courses? (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;What products or platforms did you find to be most helpful when you first started studying data science?  (Select all that apply) - Selected Choice - University courses&#39;,
+ &#39;What products or platforms did you find to be most helpful when you first started studying data science?  (Select all that apply) - Selected Choice - Online courses (Coursera, EdX, etc)&#39;,
+ &#39;What products or platforms did you find to be most helpful when you first started studying data science?  (Select all that apply) - Selected Choice - Social media platforms (Reddit, Twitter, etc)&#39;,
+ &#39;What products or platforms did you find to be most helpful when you first started studying data science?  (Select all that apply) - Selected Choice - Video platforms (YouTube, Twitch, etc)&#39;,
+ &#39;What products or platforms did you find to be most helpful when you first started studying data science?  (Select all that apply) - Selected Choice - Kaggle (notebooks, competitions, etc)&#39;,
+ &#39;What products or platforms did you find to be most helpful when you first started studying data science?  (Select all that apply) - Selected Choice - None / I do not study data science&#39;,
+ &#39;What products or platforms did you find to be most helpful when you first started studying data science?  (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;What is the highest level of formal education that you have attained or plan to attain within the next 2 years?&#39;,
+ &#39;Have you ever published any academic research (papers, preprints, conference proceedings, etc)?&#39;,
+ &#39;Did your research make use of machine learning? - Yes, the research made advances related to some novel machine learning method (theoretical research)&#39;,
+ &#39;Did your research make use of machine learning? - Yes, the research made use of machine learning as a tool (applied research)&#39;,
+ &#39;Did your research make use of machine learning? - No&#39;,
+ &#39;For how many years have you been writing code and/or programming?&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Python&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - R&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - SQL&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - C&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - C#&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - C++&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Java&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Javascript&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Bash&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - PHP&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - MATLAB&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Julia&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Go&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - None&#39;,
+ &#39;What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Other&#39;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice - JupyterLab &#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  RStudio &#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  Visual Studio &#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  Visual Studio Code (VSCode) &#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  PyCharm &#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -   Spyder  &#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -   Notepad++  &#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -   Sublime Text  &#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -   Vim / Emacs  &#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  MATLAB &#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  Jupyter Notebook&#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice - IntelliJ&#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice - None&#34;,
+ &#34;Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice - Other&#34;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice -  Kaggle Notebooks&#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice - Colab Notebooks&#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice - Azure Notebooks&#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice -  Code Ocean &#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice -  IBM Watson Studio &#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice -  Amazon Sagemaker Studio &#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice -  Amazon Sagemaker Studio Lab &#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice -  Amazon EMR Notebooks &#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice - Google Cloud Vertex AI Workbench &#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice - Hex Workspaces&#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice -  Noteable Notebooks &#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice -  Databricks Collaborative Notebooks &#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice -  Deepnote Notebooks &#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice -  Gradient Notebooks &#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Do you use any of the following hosted notebook products?  (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Matplotlib &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Seaborn &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Plotly / Plotly Express &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Ggplot / ggplot2 &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Shiny &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  D3 js &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Altair &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Bokeh &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Geoplotlib &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Leaflet / Folium &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Pygal &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Dygraphs &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice -  Highcharter &#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Do you use any of the following data visualization libraries on a regular basis?  (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;For how many years have you used machine learning methods?&#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -   Scikit-learn &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -   TensorFlow &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Keras &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  PyTorch &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Fast.ai &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Xgboost &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  LightGBM &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  CatBoost &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Caret &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Tidymodels &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  JAX &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  PyTorch Lightning &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Huggingface &#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Linear or Logistic Regression&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Decision Trees or Random Forests&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Gradient Boosting Machines (xgboost, lightgbm, etc)&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Bayesian Approaches&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Evolutionary Approaches&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Dense Neural Networks (MLPs, etc)&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Convolutional Neural Networks&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Generative Adversarial Networks&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Recurrent Neural Networks&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Transformer Networks (BERT, gpt-3, etc)&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Autoencoder Networks (DAE, VAE, etc)&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Graph Neural Networks&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - None&#39;,
+ &#39;Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Other&#39;,
+ &#39;Which categories of computer vision methods do you use on a regular basis?  (Select all that apply) - Selected Choice - General purpose image/video tools (PIL, cv2, skimage, etc)&#39;,
+ &#39;Which categories of computer vision methods do you use on a regular basis?  (Select all that apply) - Selected Choice - Image segmentation methods (U-Net, Mask R-CNN, etc)&#39;,
+ &#39;Which categories of computer vision methods do you use on a regular basis?  (Select all that apply) - Selected Choice - Object detection methods (YOLOv6, RetinaNet, etc)&#39;,
+ &#39;Which categories of computer vision methods do you use on a regular basis?  (Select all that apply) - Selected Choice - Image classification and other general purpose networks (VGG, Inception, ResNet, ResNeXt, NASNet, EfficientNet, etc)&#39;,
+ &#39;Which categories of computer vision methods do you use on a regular basis?  (Select all that apply) - Selected Choice - Generative Networks (GAN, VAE, etc)&#39;,
+ &#39;Which categories of computer vision methods do you use on a regular basis?  (Select all that apply) - Selected Choice - Vision transformer networks (ViT, DeiT, BiT, BEiT, Swin, etc)&#39;,
+ &#39;Which categories of computer vision methods do you use on a regular basis?  (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Which categories of computer vision methods do you use on a regular basis?  (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Which of the following natural language processing (NLP) methods do you use on a regular basis?  (Select all that apply) - Selected Choice - Word embeddings/vectors (GLoVe, fastText, word2vec)&#39;,
+ &#39;Which of the following natural language processing (NLP) methods do you use on a regular basis?  (Select all that apply) - Selected Choice - Encoder-decoder models (seq2seq, vanilla transformers)&#39;,
+ &#39;Which of the following natural language processing (NLP) methods do you use on a regular basis?  (Select all that apply) - Selected Choice - Contextualized embeddings (ELMo, CoVe)&#39;,
+ &#39;Which of the following natural language processing (NLP) methods do you use on a regular basis?  (Select all that apply) - Selected Choice - Transformer language models (GPT-3, BERT, XLnet, etc)&#39;,
+ &#39;Which of the following natural language processing (NLP) methods do you use on a regular basis?  (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Which of the following natural language processing (NLP) methods do you use on a regular basis?  (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Do you download pre-trained model weights from any of the following services? (Select all that apply) - Selected Choice -   TensorFlow Hub &#39;,
+ &#39;Do you download pre-trained model weights from any of the following services? (Select all that apply) - Selected Choice -  PyTorch Hub &#39;,
+ &#39;Do you download pre-trained model weights from any of the following services? (Select all that apply) - Selected Choice -  Huggingface Models &#39;,
+ &#39;Do you download pre-trained model weights from any of the following services? (Select all that apply) - Selected Choice -  Timm &#39;,
+ &#39;Do you download pre-trained model weights from any of the following services? (Select all that apply) - Selected Choice -  Jumpstart &#39;,
+ &#39;Do you download pre-trained model weights from any of the following services? (Select all that apply) - Selected Choice -  ONNX models &#39;,
+ &#39;Do you download pre-trained model weights from any of the following services? (Select all that apply) - Selected Choice -  NVIDIA NGC models  &#39;,
+ &#39;Do you download pre-trained model weights from any of the following services? (Select all that apply) - Selected Choice -  Kaggle datasets &#39;,
+ &#39;Do you download pre-trained model weights from any of the following services? (Select all that apply) - Selected Choice - No, I do not download pre-trained model weights on a regular basis&#39;,
+ &#39;Do you download pre-trained model weights from any of the following services? (Select all that apply) - Selected Choice - Other storage services (i.e. google drive)&#39;,
+ &#39;Which of the following ML model hubs/repositories do you use most often? - Selected Choice&#39;,
+ &#39;Select the title most similar to your current role (or most recent title if retired): - Selected Choice&#39;,
+ &#39;In what industry is your current employer/contract (or your most recent employer if retired)? - Selected Choice&#39;,
+ &#39;What is the size of the company where you are employed?&#39;,
+ &#39;Approximately how many individuals are responsible for data science workloads at your place of business?&#39;,
+ &#39;Does your current employer incorporate machine learning methods into their business?&#39;,
+ &#39;Select any activities that make up an important part of your role at work: (Select all that apply) - Analyze and understand data to influence product or business decisions&#39;,
+ &#39;Select any activities that make up an important part of your role at work: (Select all that apply) - Build and/or run the data infrastructure that my business uses for storing, analyzing, and operationalizing data&#39;,
+ &#39;Select any activities that make up an important part of your role at work: (Select all that apply) - Build prototypes to explore applying machine learning to new areas&#39;,
+ &#39;Select any activities that make up an important part of your role at work: (Select all that apply) - Build and/or run a machine learning service that operationally improves my product or workflows&#39;,
+ &#39;Select any activities that make up an important part of your role at work: (Select all that apply) - Experimentation and iteration to improve existing ML models&#39;,
+ &#39;Select any activities that make up an important part of your role at work: (Select all that apply) - Do research that advances the state of the art of machine learning&#39;,
+ &#39;Select any activities that make up an important part of your role at work: (Select all that apply) - None of these activities are an important part of my role at work&#39;,
+ &#39;Select any activities that make up an important part of your role at work: (Select all that apply) - Other&#39;,
+ &#39;What is your current yearly compensation (approximate $USD)?&#39;,
+ &#39;Approximately how much money have you spent on machine learning and/or cloud computing services at home or at work in the past 5 years (approximate $USD)?\n (approximate $USD)?&#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Amazon Web Services (AWS) &#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Microsoft Azure &#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Google Cloud Platform (GCP) &#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  IBM Cloud / Red Hat &#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Oracle Cloud &#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  SAP Cloud &#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  VMware Cloud &#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Alibaba Cloud &#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Tencent Cloud &#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Huawei Cloud &#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Of the cloud platforms that you are familiar with, which has the best developer experience (most enjoyable to use)? - Selected Choice&#39;,
+ &#39;Do you use any of the following cloud computing products? (Select all that apply) - Selected Choice -  Amazon Elastic Compute Cloud (EC2) &#39;,
+ &#39;Do you use any of the following cloud computing products? (Select all that apply) - Selected Choice -  Microsoft Azure Virtual Machines &#39;,
+ &#39;Do you use any of the following cloud computing products? (Select all that apply) - Selected Choice -  Google Cloud Compute Engine &#39;,
+ &#39;Do you use any of the following cloud computing products? (Select all that apply) - Selected Choice - No / None&#39;,
+ &#39;Do you use any of the following cloud computing products? (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Do you use any of the following data storage products? (Select all that apply) - Selected Choice - Microsoft Azure Blob Storage&#39;,
+ &#39;Do you use any of the following data storage products? (Select all that apply) - Selected Choice -  Microsoft Azure Files &#39;,
+ &#39;Do you use any of the following data storage products? (Select all that apply) - Selected Choice -  Amazon Simple Storage Service (S3)  &#39;,
+ &#39;Do you use any of the following data storage products? (Select all that apply) - Selected Choice -  Amazon Elastic File System (EFS)  &#39;,
+ &#39;Do you use any of the following data storage products? (Select all that apply) - Selected Choice - Google Cloud Storage (GCS)   &#39;,
+ &#39;Do you use any of the following data storage products? (Select all that apply) - Selected Choice -  Google Cloud Filestore &#39;,
+ &#39;Do you use any of the following data storage products? (Select all that apply) - Selected Choice - No / None&#39;,
+ &#39;Do you use any of the following data storage products? (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - MySQL &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - PostgreSQL &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - SQLite &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Oracle Database &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - MongoDB &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Snowflake &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - IBM Db2 &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Microsoft SQL Server &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Microsoft Azure SQL Database &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Amazon Redshift &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Amazon RDS &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Amazon DynamoDB &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Google Cloud BigQuery &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Google Cloud SQL &#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Amazon QuickSight&#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Microsoft Power BI&#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Google Data Studio&#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Looker&#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Tableau&#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Qlik Sense&#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Domo&#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - TIBCO Spotfire&#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Alteryx &#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Sisense &#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - SAP Analytics Cloud &#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Microsoft Azure Synapse &#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Thoughtspot &#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice -  Amazon SageMaker &#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice -  Azure Machine Learning Studio &#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice -  Google Cloud Vertex AI&#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice -  DataRobot&#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice -  Databricks&#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice -  Dataiku&#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice -  Alteryx&#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice -  Rapidminer&#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice -  C3.ai&#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice -  Domino Data Lab &#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice -  H2O AI Cloud &#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice - No / None&#39;,
+ &#39;Do you use any of the following managed machine learning products on a regular basis? (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -  Google Cloud AutoML &#39;,
+ &#39;Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -  H2O Driverless AI  &#39;,
+ &#39;Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -  Databricks AutoML &#39;,
+ &#39;Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -  DataRobot AutoML &#39;,
+ &#39;Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -   Amazon Sagemaker Autopilot &#39;,
+ &#39;Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -   Azure Automated Machine Learning &#39;,
+ &#39;Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice - No / None&#39;,
+ &#39;Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice -  TensorFlow Extended (TFX) &#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice -  TorchServe &#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice -  ONNX Runtime &#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice -  Triton Inference Server &#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice -  OpenVINO Model Server &#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice -  KServe &#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice -  BentoML &#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice -  Multi Model Server (MMS) &#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice -  Seldon Core &#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice -  MLflow &#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Do you use any of the following products to serve your machine learning models?  (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  Neptune.ai &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  Weights &amp; Biases &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  Comet.ml &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  TensorBoard &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  Guild.ai &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  ClearML &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  MLflow &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  Aporia &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  Evidently AI &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  Arize &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  WhyLabs &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  Fiddler &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice -  DVC &#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice - No / None&#39;,
+ &#39;Do you use any tools to help monitor your machine learning models and/or experiments? (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Do you use any of the following responsible or ethical AI products in your machine learning practices?  (Select all that apply) - Selected Choice -  Google Responsible AI Toolkit (LIT, What-if, Fairness Indicator, etc) &#39;,
+ &#39;Do you use any of the following responsible or ethical AI products in your machine learning practices?  (Select all that apply) - Selected Choice -  Microsoft Responsible AI Resources (Fairlearn, Counterfit, InterpretML, etc) &#39;,
+ &#39;Do you use any of the following responsible or ethical AI products in your machine learning practices?  (Select all that apply) - Selected Choice -  IBM AI Ethics tools (AI Fairness 360, Adversarial Robustness Toolbox, etc &#39;,
+ &#39;Do you use any of the following responsible or ethical AI products in your machine learning practices?  (Select all that apply) - Selected Choice -  Amazon AI Ethics Tools (Clarify, A2I, etc) &#39;,
+ &#39;Do you use any of the following responsible or ethical AI products in your machine learning practices?  (Select all that apply) - Selected Choice -  The LinkedIn Fairness Toolkit (LiFT) &#39;,
+ &#39;Do you use any of the following responsible or ethical AI products in your machine learning practices?  (Select all that apply) - Selected Choice -  Audit-AI &#39;,
+ &#39;Do you use any of the following responsible or ethical AI products in your machine learning practices?  (Select all that apply) - Selected Choice -  Aequitas &#39;,
+ &#39;Do you use any of the following responsible or ethical AI products in your machine learning practices?  (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Do you use any of the following responsible or ethical AI products in your machine learning practices?  (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Do you use any of the following types of specialized hardware when training machine learning models?  (Select all that apply) - Selected Choice -  GPUs &#39;,
+ &#39;Do you use any of the following types of specialized hardware when training machine learning models?  (Select all that apply) - Selected Choice -  TPUs &#39;,
+ &#39;Do you use any of the following types of specialized hardware when training machine learning models?  (Select all that apply) - Selected Choice -  IPUs &#39;,
+ &#39;Do you use any of the following types of specialized hardware when training machine learning models?  (Select all that apply) - Selected Choice -  RDUs &#39;,
+ &#39;Do you use any of the following types of specialized hardware when training machine learning models?  (Select all that apply) - Selected Choice -  WSEs &#39;,
+ &#39;Do you use any of the following types of specialized hardware when training machine learning models?  (Select all that apply) - Selected Choice -  Trainium Chips &#39;,
+ &#39;Do you use any of the following types of specialized hardware when training machine learning models?  (Select all that apply) - Selected Choice -  Inferentia Chips &#39;,
+ &#39;Do you use any of the following types of specialized hardware when training machine learning models?  (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Do you use any of the following types of specialized hardware when training machine learning models?  (Select all that apply) - Selected Choice - Other&#39;,
+ &#39;Approximately how many times have you used a TPU (tensor processing unit)?&#39;,
+ &#39;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - Twitter (data science influencers)&#39;,
+ &#34;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - Email newsletters (Data Elixir, O&#39;Reilly Data &amp; AI, etc)&#34;,
+ &#39;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - Reddit (r/machinelearning, etc)&#39;,
+ &#39;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - Kaggle (notebooks, forums, etc)&#39;,
+ &#39;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - Course Forums (forums.fast.ai, Coursera forums, etc)&#39;,
+ &#39;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - YouTube (Kaggle YouTube, Cloud AI Adventures, etc)&#39;,
+ &#39;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - Podcasts (Chai Time Data Science, O’Reilly Data Show, etc)&#39;,
+ &#39;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - Blogs (Towards Data Science, Analytics Vidhya, etc)&#39;,
+ &#39;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - Journal Publications (peer-reviewed journals, conference proceedings, etc)&#39;,
+ &#39;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - Slack Communities (ods.ai, kagglenoobs, etc)&#39;,
+ &#39;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - None&#39;,
+ &#39;Who/what are your favorite media sources that report on data science topics? (Select all that apply) - Selected Choice - Other&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0      Duration (in seconds)                                Duration (in seconds)
+       Q2                                             What is your age (# years)?
+       Q3                                  What is your gender? - Selected Choice
+       Q4                               In which country do you currently reside?
+       Q5                       Are you currently a student? (high school, uni...
+                                                      ...                        
+23997  Q17_2                                                          TensorFlow 
+       Q18_1                                        Linear or Logistic Regression
+       Q18_2                                     Decision Trees or Random Forests
+       Q21_9                    No, I do not download pre-trained model weight...
+       Q44_12                                                               Other
+Length: 858725, dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dft</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">dft</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>23988</th>
+      <th>23989</th>
+      <th>23990</th>
+      <th>23991</th>
+      <th>23992</th>
+      <th>23993</th>
+      <th>23994</th>
+      <th>23995</th>
+      <th>23996</th>
+      <th>23997</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Duration (in seconds)</th>
+      <td>Duration (in seconds)</td>
+      <td>121</td>
+      <td>462</td>
+      <td>293</td>
+      <td>851</td>
+      <td>232</td>
+      <td>277</td>
+      <td>1550</td>
+      <td>501</td>
+      <td>787</td>
+      <td>...</td>
+      <td>245</td>
+      <td>402</td>
+      <td>603</td>
+      <td>557</td>
+      <td>153</td>
+      <td>331</td>
+      <td>330</td>
+      <td>860</td>
+      <td>597</td>
+      <td>303</td>
+    </tr>
+    <tr>
+      <th>Q2</th>
+      <td>What is your age (# years)?</td>
+      <td>30-34</td>
+      <td>30-34</td>
+      <td>18-21</td>
+      <td>55-59</td>
+      <td>45-49</td>
+      <td>18-21</td>
+      <td>18-21</td>
+      <td>30-34</td>
+      <td>70+</td>
+      <td>...</td>
+      <td>18-21</td>
+      <td>55-59</td>
+      <td>35-39</td>
+      <td>40-44</td>
+      <td>22-24</td>
+      <td>22-24</td>
+      <td>60-69</td>
+      <td>25-29</td>
+      <td>35-39</td>
+      <td>18-21</td>
+    </tr>
+    <tr>
+      <th>Q3</th>
+      <td>What is your gender? - Selected Choice</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Woman</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>...</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Man</td>
+      <td>Woman</td>
+      <td>Man</td>
+    </tr>
+    <tr>
+      <th>Q4</th>
+      <td>In which country do you currently reside?</td>
+      <td>India</td>
+      <td>Algeria</td>
+      <td>Egypt</td>
+      <td>France</td>
+      <td>India</td>
+      <td>India</td>
+      <td>India</td>
+      <td>Germany</td>
+      <td>Australia</td>
+      <td>...</td>
+      <td>India</td>
+      <td>Ukraine</td>
+      <td>India</td>
+      <td>India</td>
+      <td>India</td>
+      <td>United States of America</td>
+      <td>United States of America</td>
+      <td>Turkey</td>
+      <td>Israel</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>Q5</th>
+      <td>Are you currently a student? (high school, uni...</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>...</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Q44_8</th>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Blogs (Towards Data Science, Analytics Vidhya,...</td>
+      <td>Blogs (Towards Data Science, Analytics Vidhya,...</td>
+      <td>Blogs (Towards Data Science, Analytics Vidhya,...</td>
+      <td>Blogs (Towards Data Science, Analytics Vidhya,...</td>
+      <td>Blogs (Towards Data Science, Analytics Vidhya,...</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Q44_9</th>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Journal Publications (peer-reviewed journals, ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Q44_10</th>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Q44_11</th>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Q44_12</th>
+      <td>Who/what are your favorite media sources that ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>Other</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Other</td>
+    </tr>
+  </tbody>
+</table>
+<p>296 rows × 23998 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Duration (in seconds)        0
+Q2                           0
+Q3                           0
+Q4                           0
+Q5                           0
+                         ...  
+Q44_9                    20193
+Q44_10                   22271
+Q44_11                   22729
+Q44_12                   23162
+aggpro                   20072
+Length: 297, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfid</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Q2&#39;</span><span class="p">])[[</span><span class="s1">&#39;student?_Yes&#39;</span><span class="p">,</span><span class="s1">&#39;student?_No&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student?_Yes</th>
+      <th>student?_No</th>
+    </tr>
+    <tr>
+      <th>Q2</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>18-21</th>
+      <td>4386.0</td>
+      <td>173.0</td>
+    </tr>
+    <tr>
+      <th>22-24</th>
+      <td>2981.0</td>
+      <td>1302.0</td>
+    </tr>
+    <tr>
+      <th>25-29</th>
+      <td>1976.0</td>
+      <td>2496.0</td>
+    </tr>
+    <tr>
+      <th>30-34</th>
+      <td>887.0</td>
+      <td>2085.0</td>
+    </tr>
+    <tr>
+      <th>35-39</th>
+      <td>627.0</td>
+      <td>1726.0</td>
+    </tr>
+    <tr>
+      <th>40-44</th>
+      <td>464.0</td>
+      <td>1463.0</td>
+    </tr>
+    <tr>
+      <th>45-49</th>
+      <td>290.0</td>
+      <td>963.0</td>
+    </tr>
+    <tr>
+      <th>50-54</th>
+      <td>163.0</td>
+      <td>751.0</td>
+    </tr>
+    <tr>
+      <th>55-59</th>
+      <td>99.0</td>
+      <td>512.0</td>
+    </tr>
+    <tr>
+      <th>60-69</th>
+      <td>64.0</td>
+      <td>462.0</td>
+    </tr>
+    <tr>
+      <th>70+</th>
+      <td>24.0</td>
+      <td>103.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfid</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Q4&#39;</span><span class="p">])[[</span><span class="s1">&#39;student?_Yes&#39;</span><span class="p">,</span><span class="s1">&#39;student?_No&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student?_Yes</th>
+      <th>student?_No</th>
+    </tr>
+    <tr>
+      <th>Q4</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Algeria</th>
+      <td>46.0</td>
+      <td>16.0</td>
+    </tr>
+    <tr>
+      <th>Argentina</th>
+      <td>110.0</td>
+      <td>94.0</td>
+    </tr>
+    <tr>
+      <th>Australia</th>
+      <td>56.0</td>
+      <td>86.0</td>
+    </tr>
+    <tr>
+      <th>Bangladesh</th>
+      <td>182.0</td>
+      <td>69.0</td>
+    </tr>
+    <tr>
+      <th>Belgium</th>
+      <td>8.0</td>
+      <td>43.0</td>
+    </tr>
+    <tr>
+      <th>Brazil</th>
+      <td>437.0</td>
+      <td>396.0</td>
+    </tr>
+    <tr>
+      <th>Cameroon</th>
+      <td>50.0</td>
+      <td>18.0</td>
+    </tr>
+    <tr>
+      <th>Canada</th>
+      <td>87.0</td>
+      <td>170.0</td>
+    </tr>
+    <tr>
+      <th>Chile</th>
+      <td>50.0</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>China</th>
+      <td>290.0</td>
+      <td>163.0</td>
+    </tr>
+    <tr>
+      <th>Colombia</th>
+      <td>137.0</td>
+      <td>119.0</td>
+    </tr>
+    <tr>
+      <th>Czech Republic</th>
+      <td>10.0</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>Ecuador</th>
+      <td>40.0</td>
+      <td>14.0</td>
+    </tr>
+    <tr>
+      <th>Egypt</th>
+      <td>240.0</td>
+      <td>143.0</td>
+    </tr>
+    <tr>
+      <th>Ethiopia</th>
+      <td>57.0</td>
+      <td>41.0</td>
+    </tr>
+    <tr>
+      <th>France</th>
+      <td>74.0</td>
+      <td>188.0</td>
+    </tr>
+    <tr>
+      <th>Germany</th>
+      <td>32.0</td>
+      <td>67.0</td>
+    </tr>
+    <tr>
+      <th>Ghana</th>
+      <td>68.0</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>Hong Kong (S.A.R.)</th>
+      <td>17.0</td>
+      <td>41.0</td>
+    </tr>
+    <tr>
+      <th>I do not wish to disclose my location</th>
+      <td>23.0</td>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>India</th>
+      <td>4967.0</td>
+      <td>3825.0</td>
+    </tr>
+    <tr>
+      <th>Indonesia</th>
+      <td>228.0</td>
+      <td>148.0</td>
+    </tr>
+    <tr>
+      <th>Iran, Islamic Republic of...</th>
+      <td>74.0</td>
+      <td>46.0</td>
+    </tr>
+    <tr>
+      <th>Ireland</th>
+      <td>17.0</td>
+      <td>36.0</td>
+    </tr>
+    <tr>
+      <th>Israel</th>
+      <td>33.0</td>
+      <td>69.0</td>
+    </tr>
+    <tr>
+      <th>Italy</th>
+      <td>54.0</td>
+      <td>128.0</td>
+    </tr>
+    <tr>
+      <th>Japan</th>
+      <td>86.0</td>
+      <td>470.0</td>
+    </tr>
+    <tr>
+      <th>Kenya</th>
+      <td>134.0</td>
+      <td>67.0</td>
+    </tr>
+    <tr>
+      <th>Malaysia</th>
+      <td>33.0</td>
+      <td>41.0</td>
+    </tr>
+    <tr>
+      <th>Mexico</th>
+      <td>192.0</td>
+      <td>188.0</td>
+    </tr>
+    <tr>
+      <th>Morocco</th>
+      <td>119.0</td>
+      <td>58.0</td>
+    </tr>
+    <tr>
+      <th>Nepal</th>
+      <td>54.0</td>
+      <td>21.0</td>
+    </tr>
+    <tr>
+      <th>Netherlands</th>
+      <td>13.0</td>
+      <td>95.0</td>
+    </tr>
+    <tr>
+      <th>Nigeria</th>
+      <td>482.0</td>
+      <td>249.0</td>
+    </tr>
+    <tr>
+      <th>Other</th>
+      <td>708.0</td>
+      <td>722.0</td>
+    </tr>
+    <tr>
+      <th>Pakistan</th>
+      <td>418.0</td>
+      <td>202.0</td>
+    </tr>
+    <tr>
+      <th>Peru</th>
+      <td>73.0</td>
+      <td>48.0</td>
+    </tr>
+    <tr>
+      <th>Philippines</th>
+      <td>47.0</td>
+      <td>61.0</td>
+    </tr>
+    <tr>
+      <th>Poland</th>
+      <td>29.0</td>
+      <td>84.0</td>
+    </tr>
+    <tr>
+      <th>Portugal</th>
+      <td>34.0</td>
+      <td>53.0</td>
+    </tr>
+    <tr>
+      <th>Romania</th>
+      <td>21.0</td>
+      <td>29.0</td>
+    </tr>
+    <tr>
+      <th>Russia</th>
+      <td>160.0</td>
+      <td>164.0</td>
+    </tr>
+    <tr>
+      <th>Saudi Arabia</th>
+      <td>32.0</td>
+      <td>52.0</td>
+    </tr>
+    <tr>
+      <th>Singapore</th>
+      <td>22.0</td>
+      <td>46.0</td>
+    </tr>
+    <tr>
+      <th>South Africa</th>
+      <td>58.0</td>
+      <td>51.0</td>
+    </tr>
+    <tr>
+      <th>South Korea</th>
+      <td>104.0</td>
+      <td>213.0</td>
+    </tr>
+    <tr>
+      <th>Spain</th>
+      <td>80.0</td>
+      <td>177.0</td>
+    </tr>
+    <tr>
+      <th>Sri Lanka</th>
+      <td>43.0</td>
+      <td>34.0</td>
+    </tr>
+    <tr>
+      <th>Taiwan</th>
+      <td>70.0</td>
+      <td>172.0</td>
+    </tr>
+    <tr>
+      <th>Thailand</th>
+      <td>53.0</td>
+      <td>79.0</td>
+    </tr>
+    <tr>
+      <th>Tunisia</th>
+      <td>96.0</td>
+      <td>29.0</td>
+    </tr>
+    <tr>
+      <th>Turkey</th>
+      <td>175.0</td>
+      <td>170.0</td>
+    </tr>
+    <tr>
+      <th>Ukraine</th>
+      <td>40.0</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>United Arab Emirates</th>
+      <td>20.0</td>
+      <td>74.0</td>
+    </tr>
+    <tr>
+      <th>United Kingdom of Great Britain and Northern Ireland</th>
+      <td>87.0</td>
+      <td>171.0</td>
+    </tr>
+    <tr>
+      <th>United States of America</th>
+      <td>924.0</td>
+      <td>1996.0</td>
+    </tr>
+    <tr>
+      <th>Viet Nam</th>
+      <td>135.0</td>
+      <td>77.0</td>
+    </tr>
+    <tr>
+      <th>Zimbabwe</th>
+      <td>32.0</td>
+      <td>22.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfid</span><span class="p">[</span><span class="s1">&#39;Q3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Man                        18266
+Woman                       5286
+Prefer not to say            334
+Nonbinary                     78
+Prefer to self-describe       33
+Name: Q3, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Q12_1</span>
+<span class="n">dfpro</span><span class="p">[</span><span class="s1">&#39;Q12_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">dfpro</span><span class="p">[</span><span class="s1">&#39;Q12_2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>R                                                                                                          4571
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - R       1
+Name: Q12_2, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">14</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dfpro</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Q12_</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Python                                                                                                          18653
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Python        1
+Name: Q12_1, dtype: int64
+R                                                                                                          4571
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - R       1
+Name: Q12_2, dtype: int64
+SQL                                                                                                          9620
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - SQL       1
+Name: Q12_3, dtype: int64
+C                                                                                                          3801
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - C       1
+Name: Q12_4, dtype: int64
+C#                                                                                                          1473
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - C#       1
+Name: Q12_5, dtype: int64
+C++                                                                                                          4549
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - C++       1
+Name: Q12_6, dtype: int64
+Java                                                                                                          3862
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Java       1
+Name: Q12_7, dtype: int64
+Javascript                                                                                                          3489
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Javascript       1
+Name: Q12_8, dtype: int64
+Bash                                                                                                          1674
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Bash       1
+Name: Q12_9, dtype: int64
+PHP                                                                                                          1443
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - PHP       1
+Name: Q12_10, dtype: int64
+MATLAB                                                                                                          2441
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - MATLAB       1
+Name: Q12_11, dtype: int64
+Julia                                                                                                          296
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Julia      1
+Name: Q12_12, dtype: int64
+Go                                                                                                          322
+What programming languages do you use on a regular basis? (Select all that apply) - Selected Choice - Go      1
+Name: Q12_13, dtype: int64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfpro</span><span class="p">[</span><span class="s1">&#39;Q12_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>5344</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">14</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dfpro</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Q13_</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>JupyterLab                                                                                                                                                    4887
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice - JupyterLab        1
+Name: Q13_1, dtype: int64
+ RStudio                                                                                                                                                    3824
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  RStudio        1
+Name: Q13_2, dtype: int64
+ Visual Studio                                                                                                                                                    4416
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  Visual Studio        1
+Name: Q13_3, dtype: int64
+ Visual Studio Code (VSCode)                                                                                                                                                    9976
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  Visual Studio Code (VSCode)        1
+Name: Q13_4, dtype: int64
+ PyCharm                                                                                                                                                    6099
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  PyCharm        1
+Name: Q13_5, dtype: int64
+  Spyder                                                                                                                                                     2880
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -   Spyder         1
+Name: Q13_6, dtype: int64
+  Notepad++                                                                                                                                                     3891
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -   Notepad++         1
+Name: Q13_7, dtype: int64
+  Sublime Text                                                                                                                                                     2218
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -   Sublime Text         1
+Name: Q13_8, dtype: int64
+  Vim / Emacs                                                                                                                                                     1448
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -   Vim / Emacs         1
+Name: Q13_9, dtype: int64
+ MATLAB                                                                                                                                                    2302
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  MATLAB        1
+Name: Q13_10, dtype: int64
+ Jupyter Notebook                                                                                                                                                   13684
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  Jupyter Notebook        1
+Name: Q13_11, dtype: int64
+IntelliJ                                                                                                                                                   1612
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice - IntelliJ       1
+Name: Q13_12, dtype: int64
+None                                                                                                                                                   409
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice - None      1
+Name: Q13_13, dtype: int64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfpro</span><span class="p">[</span><span class="s1">&#39;Q13_11&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="c1"># most used is python, best ide is Jupyter, then Vs code</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre> Jupyter Notebook                                                                                                                                                   13684
+Which of the following integrated development environments (IDE&#39;s) do you use on a regular basis?  (Select all that apply) - Selected Choice -  Jupyter Notebook        1
+Name: Q13_11, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 648 responses and pytorch 5191</span>
+<span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">16</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dfpro</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Q17_</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>  Scikit-learn                                                                                                                                   11403
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -   Scikit-learn         1
+Name: Q17_1, dtype: int64
+  TensorFlow                                                                                                                                   7953
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -   TensorFlow        1
+Name: Q17_2, dtype: int64
+ Keras                                                                                                                                   6575
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Keras        1
+Name: Q17_3, dtype: int64
+ PyTorch                                                                                                                                   5191
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  PyTorch        1
+Name: Q17_4, dtype: int64
+ Fast.ai                                                                                                                                   648
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Fast.ai       1
+Name: Q17_5, dtype: int64
+ Xgboost                                                                                                                                   4477
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Xgboost        1
+Name: Q17_6, dtype: int64
+ LightGBM                                                                                                                                   1940
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  LightGBM        1
+Name: Q17_7, dtype: int64
+ CatBoost                                                                                                                                   1165
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  CatBoost        1
+Name: Q17_8, dtype: int64
+ Caret                                                                                                                                   821
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Caret       1
+Name: Q17_9, dtype: int64
+ Tidymodels                                                                                                                                   547
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Tidymodels       1
+Name: Q17_10, dtype: int64
+ JAX                                                                                                                                   252
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  JAX       1
+Name: Q17_11, dtype: int64
+ PyTorch Lightning                                                                                                                                   1013
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  PyTorch Lightning        1
+Name: Q17_12, dtype: int64
+ Huggingface                                                                                                                                   1332
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice -  Huggingface        1
+Name: Q17_13, dtype: int64
+None                                                                                                                                  1709
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice - None       1
+Name: Q17_14, dtype: int64
+Other                                                                                                                                  620
+Which of the following machine learning frameworks do you use on a regular basis? (Select all that apply) - Selected Choice - Other      1
+Name: Q17_15, dtype: int64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dfpro</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Q18_</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Linear or Logistic Regression                                                                                                                     11338
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Linear or Logistic Regression        1
+Name: Q18_1, dtype: int64
+Decision Trees or Random Forests                                                                                                                     9373
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Decision Trees or Random Forests       1
+Name: Q18_2, dtype: int64
+Gradient Boosting Machines (xgboost, lightgbm, etc)                                                                                                                     5506
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Gradient Boosting Machines (xgboost, lightgbm, etc)       1
+Name: Q18_3, dtype: int64
+Bayesian Approaches                                                                                                                     3661
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Bayesian Approaches       1
+Name: Q18_4, dtype: int64
+Evolutionary Approaches                                                                                                                     823
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Evolutionary Approaches      1
+Name: Q18_5, dtype: int64
+Dense Neural Networks (MLPs, etc)                                                                                                                     3476
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Dense Neural Networks (MLPs, etc)       1
+Name: Q18_6, dtype: int64
+Convolutional Neural Networks                                                                                                                     6006
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Convolutional Neural Networks       1
+Name: Q18_7, dtype: int64
+Generative Adversarial Networks                                                                                                                     1166
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Generative Adversarial Networks       1
+Name: Q18_8, dtype: int64
+Recurrent Neural Networks                                                                                                                     3451
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Recurrent Neural Networks       1
+Name: Q18_9, dtype: int64
+Transformer Networks (BERT, gpt-3, etc)                                                                                                                     2196
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Transformer Networks (BERT, gpt-3, etc)       1
+Name: Q18_10, dtype: int64
+Autoencoder Networks (DAE, VAE, etc)                                                                                                                     1234
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Autoencoder Networks (DAE, VAE, etc)       1
+Name: Q18_11, dtype: int64
+Graph Neural Networks                                                                                                                     1422
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Graph Neural Networks       1
+Name: Q18_12, dtype: int64
+None                                                                                                                     1326
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - None       1
+Name: Q18_13, dtype: int64
+Other                                                                                                                     538
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Other      1
+Name: Q18_14, dtype: int64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfpro</span><span class="p">[</span><span class="s1">&#39;Q18_7&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Convolutional Neural Networks                                                                                                                     6006
+Which of the following ML algorithms do you use on a regular basis? (Select all that apply): - Selected Choice - Convolutional Neural Networks       1
+Name: Q18_7, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfpro</span><span class="p">[</span><span class="s1">&#39;Q29&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>$0-999                                                          1112
+10,000-14,999                                                    493
+30,000-39,999                                                    464
+1,000-1,999                                                      444
+40,000-49,999                                                    421
+100,000-124,999                                                  404
+5,000-7,499                                                      391
+50,000-59,999                                                    366
+7,500-9,999                                                      362
+150,000-199,999                                                  342
+20,000-24,999                                                    337
+60,000-69,999                                                    318
+15,000-19,999                                                    299
+70,000-79,999                                                    289
+25,000-29,999                                                    277
+2,000-2,999                                                      271
+125,000-149,999                                                  269
+3,000-3,999                                                      244
+4,000-4,999                                                      234
+80,000-89,999                                                    222
+90,000-99,999                                                    197
+200,000-249,999                                                  155
+250,000-299,999                                                   78
+300,000-499,999                                                   76
+$500,000-999,999                                                  48
+&gt;$1,000,000                                                       23
+What is your current yearly compensation (approximate $USD)?       1
+Name: Q29, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfpro</span><span class="p">[</span><span class="s1">&#39;Q30&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="c1"># majority dont spend anything or max between 0-999$, people who put down more is prob for education</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>$0 ($USD)                                                                                                                                                                           2822
+$100-$999                                                                                                                                                                           2078
+$1000-$9,999                                                                                                                                                                        1469
+$1-$99                                                                                                                                                                              1449
+$10,000-$99,999                                                                                                                                                                      480
+$100,000 or more ($USD)                                                                                                                                                              186
+Approximately how much money have you spent on machine learning and/or cloud computing services at home or at work in the past 5 years (approximate $USD)?\n (approximate $USD)?       1
+Name: Q30, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dfpro</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Q31_</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> Amazon Web Services (AWS)                                                                                                              2346
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Amazon Web Services (AWS)        1
+Name: Q31_1, dtype: int64
+ Microsoft Azure                                                                                                              1416
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Microsoft Azure        1
+Name: Q31_2, dtype: int64
+ Google Cloud Platform (GCP)                                                                                                              2056
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Google Cloud Platform (GCP)        1
+Name: Q31_3, dtype: int64
+ IBM Cloud / Red Hat                                                                                                              287
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  IBM Cloud / Red Hat       1
+Name: Q31_4, dtype: int64
+ Oracle Cloud                                                                                                              230
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Oracle Cloud       1
+Name: Q31_5, dtype: int64
+ SAP Cloud                                                                                                              107
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  SAP Cloud       1
+Name: Q31_6, dtype: int64
+ VMware Cloud                                                                                                              155
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  VMware Cloud       1
+Name: Q31_7, dtype: int64
+ Alibaba Cloud                                                                                                              76
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Alibaba Cloud      1
+Name: Q31_8, dtype: int64
+ Tencent Cloud                                                                                                              56
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Tencent Cloud      1
+Name: Q31_9, dtype: int64
+ Huawei Cloud                                                                                                              47
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice -  Huawei Cloud      1
+Name: Q31_10, dtype: int64
+None                                                                                                             1167
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice - None       1
+Name: Q31_11, dtype: int64
+Other                                                                                                             217
+Which of the following cloud computing platforms do you use? (Select all that apply) - Selected Choice - Other      1
+Name: Q31_12, dtype: int64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">17</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dfpro</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Q35_</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>MySQL                                                                                                                                                                2233
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - MySQL        1
+Name: Q35_1, dtype: int64
+PostgreSQL                                                                                                                                                                1516
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - PostgreSQL        1
+Name: Q35_2, dtype: int64
+SQLite                                                                                                                                                                1159
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - SQLite        1
+Name: Q35_3, dtype: int64
+Oracle Database                                                                                                                                                                688
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Oracle Database       1
+Name: Q35_4, dtype: int64
+MongoDB                                                                                                                                                                1031
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - MongoDB        1
+Name: Q35_5, dtype: int64
+Snowflake                                                                                                                                                                399
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Snowflake       1
+Name: Q35_6, dtype: int64
+IBM Db2                                                                                                                                                                192
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - IBM Db2       1
+Name: Q35_7, dtype: int64
+Microsoft SQL Server                                                                                                                                                                1203
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Microsoft SQL Server        1
+Name: Q35_8, dtype: int64
+Microsoft Azure SQL Database                                                                                                                                                                520
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Microsoft Azure SQL Database       1
+Name: Q35_9, dtype: int64
+Amazon Redshift                                                                                                                                                                380
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Amazon Redshift       1
+Name: Q35_10, dtype: int64
+Amazon RDS                                                                                                                                                                505
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Amazon RDS       1
+Name: Q35_11, dtype: int64
+Amazon DynamoDB                                                                                                                                                                356
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Amazon DynamoDB       1
+Name: Q35_12, dtype: int64
+Google Cloud BigQuery                                                                                                                                                                690
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Google Cloud BigQuery       1
+Name: Q35_13, dtype: int64
+Google Cloud SQL                                                                                                                                                                439
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Google Cloud SQL       1
+Name: Q35_14, dtype: int64
+None                                                                                                                                                               955
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - None      1
+Name: Q35_15, dtype: int64
+Other                                                                                                                                                               217
+Do you use any of the following data products (relational databases, data warehouses, data lakes, or similar)? (Select all that apply) - Selected Choice - Other      1
+Name: Q35_16, dtype: int64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">16</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dfpro</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Q36_</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Amazon QuickSight                                                                                                             224
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Amazon QuickSight      1
+Name: Q36_1, dtype: int64
+Microsoft Power BI                                                                                                             1658
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Microsoft Power BI       1
+Name: Q36_2, dtype: int64
+Google Data Studio                                                                                                             643
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Google Data Studio      1
+Name: Q36_3, dtype: int64
+Looker                                                                                                             166
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Looker      1
+Name: Q36_4, dtype: int64
+Tableau                                                                                                             1732
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Tableau       1
+Name: Q36_5, dtype: int64
+Qlik Sense                                                                                                             207
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Qlik Sense      1
+Name: Q36_6, dtype: int64
+Domo                                                                                                             44
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Domo     1
+Name: Q36_7, dtype: int64
+TIBCO Spotfire                                                                                                             86
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - TIBCO Spotfire     1
+Name: Q36_8, dtype: int64
+Alteryx                                                                                                              132
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Alteryx       1
+Name: Q36_9, dtype: int64
+Sisense                                                                                                              38
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Sisense      1
+Name: Q36_10, dtype: int64
+SAP Analytics Cloud                                                                                                              106
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - SAP Analytics Cloud       1
+Name: Q36_11, dtype: int64
+Microsoft Azure Synapse                                                                                                              167
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Microsoft Azure Synapse       1
+Name: Q36_12, dtype: int64
+Thoughtspot                                                                                                              22
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Thoughtspot      1
+Name: Q36_13, dtype: int64
+None                                                                                                             2050
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - None       1
+Name: Q36_14, dtype: int64
+Other                                                                                                             191
+Do you use any of the following business intelligence tools? (Select all that apply) - Selected Choice - Other      1
+Name: Q36_15, dtype: int64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dfpro</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Q38_</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+    
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre> Google Cloud AutoML                                                                                                                    463
+Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -  Google Cloud AutoML       1
+Name: Q38_1, dtype: int64
+ H2O Driverless AI                                                                                                                     122
+Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -  H2O Driverless AI        1
+Name: Q38_2, dtype: int64
+ Databricks AutoML                                                                                                                    193
+Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -  Databricks AutoML       1
+Name: Q38_3, dtype: int64
+ DataRobot AutoML                                                                                                                    125
+Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -  DataRobot AutoML       1
+Name: Q38_4, dtype: int64
+  Amazon Sagemaker Autopilot                                                                                                                    261
+Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -   Amazon Sagemaker Autopilot       1
+Name: Q38_5, dtype: int64
+  Azure Automated Machine Learning                                                                                                                    323
+Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice -   Azure Automated Machine Learning       1
+Name: Q38_6, dtype: int64
+No / None                                                                                                                   3536
+Do you use any of the following automated machine learning tools?  (Select all that apply) - Selected Choice - No / None       1
+Name: Q38_7, dtype: int64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">dfpro</span><span class="p">[</span><span class="s1">&#39;Q11&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">/</span><span class="n">dfpro</span><span class="p">[</span><span class="s1">&#39;Q11&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">*</span><span class="mi">100</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1-3 years                                                            27.787816
+&lt; 1 years                                                            23.464120
+3-5 years                                                            14.623129
+5-10 years                                                           10.996386
+I have never written code                                             8.763552
+10-20 years                                                           7.748236
+20+ years                                                             6.612459
+For how many years have you been writing code and/or programming?     0.004302
+Name: Q11, dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dfpro</span><span class="p">[</span><span class="s1">&#39;Q11&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;For how many years have you been writing code and/or programming?&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;AxesSubplot:&gt;</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><a class="u-url" href="/fastaiMLmodel/2022/10/19/data-exploration-kaggle-ml-data.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/fastaiMLmodel/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/fastaiMLmodel/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/fastaiMLmodel/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/ericvincent18" target="_blank" title="ericvincent18"><svg class="svg-icon grey"><use xlink:href="/fastaiMLmodel/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
