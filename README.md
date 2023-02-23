@@ -6,5 +6,5 @@
 
 https://ericvincent.quarto.pub/ericvincent-data-science/about.html
 
-My Blog
+# My Blog
 Migrated from fastpages to https://ericvincent.quarto.pub/ericvincent-data-science/about.html
